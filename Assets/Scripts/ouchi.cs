@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,18 +12,32 @@ public class ouchi : MonoBehaviour
     public GameObject displayPlane;
     public Material material;
     private Texture2D texture;
-    public int PatternHeight = 64;
-    public int PatternWidth = 64;
+    public int PatternHeight;
+    public int PatternWidth;
+    public int radius = 150;
 
     void GeneratePattern()
     {
         texture = new Texture2D(width, height);
-
+        // define the background pattern
         for (int h = 0; h < height; h++)
             for (int w = 0; w < width; w++)
             {
-                texture.SetPixel(w, h, ((w / PatternWidth) % 2 == (h / PatternHeight) % 2) ? Color.white : Color.red);
+                texture.SetPixel(w, h, (w / PatternWidth % 2 == h / PatternHeight % 2) ? Color.white : Color.black);
             }
+        // define the center circular pattern
+        int centerX = width / 2;
+        int centerY = height / 2;
+        for (int h = 0; h < height; h++)
+            for (int w = 0; w < width; w++)
+            {
+                if (Mathf.Pow(w - centerX, 2) + Mathf.Pow(h - centerY, 2) < Mathf.Pow(radius, 2))
+                {
+                    // texture.SetPixel(w, h, Color.red);
+                    texture.SetPixel(h, w, ((w / PatternWidth) % 2 == (h / PatternHeight) % 2) ? Color.black : Color.white);
+                }
+            }
+
 
         texture.filterMode = FilterMode.Point;
         texture.Apply();
