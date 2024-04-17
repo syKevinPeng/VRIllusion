@@ -12,11 +12,14 @@ public class ouchi : MonoBehaviour
     public GameObject displayPlane;
     public Material material;
     private Texture2D texture;
-    public int PatternHeight;
-    public int PatternWidth;
-    public int radius = 150;
+    private int InitPatternHeight = 8;
+    private int InitPatternWidth = 32;
+    private int radius = 150;
 
-    void GeneratePattern()
+    private int CurrentPatternHeight;
+    private int CurrentPatternWidth;
+
+    void GeneratePattern(int PatternHeight, int PatternWidth)
     {
         texture = new Texture2D(width, height);
         // define the background pattern
@@ -42,19 +45,50 @@ public class ouchi : MonoBehaviour
         texture.filterMode = FilterMode.Point;
         texture.Apply();
         material.mainTexture = texture;
-        // TODO: save the texture to a file
+        // // TODO: save the texture to a file
 
-        byte[] bytes = texture.EncodeToPNG();
-        string derectoryPath = Application.dataPath + "/SavedTextures";
-        string filePath = derectoryPath + "/pattern.png";
-        File.WriteAllBytes(filePath, bytes);
-        Debug.Log("=== Saved to " + filePath);
+        // byte[] bytes = texture.EncodeToPNG();
+        // string derectoryPath = Application.dataPath + "/SavedTextures";
+        // string filePath = derectoryPath + "/pattern.png";
+        // File.WriteAllBytes(filePath, bytes);
+        // Debug.Log("=== Saved to " + filePath);
     }
+    float GetCurrentRatio()
+    {
+        return (CurrentPatternWidth + 0f) / CurrentPatternHeight;
+    }
+
+    void SetPatternRatio(float ratio)
+    {
+        CurrentPatternWidth = (int)(CurrentPatternHeight * ratio);
+    }
+
+    public void IncreasePatternRatio(float step = 0.01f)
+    {
+        Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
+        SetPatternRatio(GetCurrentRatio() + step);
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+    }
+    public void DecreasePatternRatio(float step = 0.01f)
+    {
+        SetPatternRatio(GetCurrentRatio() - step);
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+    }
+
+    void ResetPattern()
+    {
+        CurrentPatternHeight = InitPatternHeight;
+        CurrentPatternWidth = InitPatternWidth;
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+    }
+
 
     void Start()
     {
-        GeneratePattern();
-
+        GeneratePattern(InitPatternHeight, InitPatternWidth);
+        CurrentPatternHeight = InitPatternHeight;
+        CurrentPatternWidth = InitPatternWidth;
+        Debug.Log("Intial Ratio: " + GetCurrentRatio());
     }
 
     // Update is called once per frame
