@@ -85,6 +85,8 @@ public class ouchi : MonoBehaviour
 
     void Start()
     {
+        // set the event system disabled by default
+        Debug.Log("========== Ouchi Start ==========");
         GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;

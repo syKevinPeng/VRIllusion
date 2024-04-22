@@ -10,7 +10,7 @@ public class Controller : MonoBehaviour
     private OVRInput.Controller LController = OVRInput.Controller.LTouch;
     private OVRInput.Controller RController = OVRInput.Controller.RTouch;
     // raise exception if Quad is not found
-    public GameObject Quad;
+    private GameObject Quad;
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
     {
@@ -35,14 +35,16 @@ public class Controller : MonoBehaviour
 
     void Start()
     {
-
+        Quad = GameObject.Find("Quad");
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetIncreaseButtonPressed();
-        GetDecreaseButtonPressed();
-
+        if (Quad != null)
+        {
+            GetIncreaseButtonPressed();
+            GetDecreaseButtonPressed();
+        }
     }
 }

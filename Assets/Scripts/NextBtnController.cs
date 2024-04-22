@@ -1,15 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Oculus.Interaction;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class NextBtnController : MonoBehaviour
 {
     public GameObject WelcomePage;
     public GameObject BeforeStartedPage;
     public GameObject InstructionPage;
     private GameObject currentPage;
+    // public Button NxtButton;
+    // public InteractableUnityEventWrapper interactableUnityEventWrapper;
+
+
     public void NextBtnClick()
     {
+        Debug.LogWarning("<color=red>Next Button is clicked</color>");
+
+        // interactableUnityEventWrapper.WhenSelect.Invoke();
+
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+        // 
+
         if (currentPage == WelcomePage)
         {
             currentPage.SetActive(false);
@@ -27,27 +49,51 @@ public class NextBtnController : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         }
     }
+
+    public void doNothing() { }
+
     void Start()
     {
-        WelcomePage = GameObject.Find("WelcomePage");
-        BeforeStartedPage = GameObject.Find("BeforeStartedPage");
-        InstructionPage = GameObject.Find("InstructionPage");
-        if (WelcomePage == null || BeforeStartedPage == null || InstructionPage == null)
+        Debug.LogWarning("Next Btn Start()");
+
+        // WelcomePage = GameObject.Find("Menu Canvas/WelcomePage");
+        // BeforeStartedPage = GameObject.Find("Menu Canvas/BeforeStartedPage");
+        // InstructionPage = GameObject.Find("Menu Canvas/InstructionPage");
+        if (WelcomePage == null)
         {
-            Debug.LogError("WelcomePage or BeforeStartedPage or InstructionPage is not found");
+            Debug.LogError("<color=red>WelcomePage </color>");
         }
+        if (BeforeStartedPage == null)
+        {
+            Debug.LogError("<color=red>BeforeStartedPage is not found</color>");
+        }
+        if (InstructionPage == null)
+        {
+            Debug.LogError("<color=red>InstructionPage is not found</color>");
+        }
+        // if (NxtButton == null)
+        // {
+        //     Debug.LogError("<color=red>Button is not found</color>");
+        // }
 
         currentPage = WelcomePage;
+        BeforeStartedPage.SetActive(false);
+        InstructionPage.SetActive(false);
 
+
+
+        // call NextBtnClick when the button is clicked or selected
+
+
+
+        // NxtButton.on
+        // .AddListener(NextBtnClick);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            NextBtnClick();
-        }
+
 
     }
 }
