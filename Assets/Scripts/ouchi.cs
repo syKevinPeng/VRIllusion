@@ -45,34 +45,34 @@ public class ouchi : MonoBehaviour
         texture.filterMode = FilterMode.Point;
         texture.Apply();
         material.mainTexture = texture;
-        // // TODO: save the texture to a file
 
-        // byte[] bytes = texture.EncodeToPNG();
-        // string derectoryPath = Application.dataPath + "/SavedTextures";
-        // string filePath = derectoryPath + "/pattern.png";
-        // File.WriteAllBytes(filePath, bytes);
-        // Debug.Log("=== Saved to " + filePath);
     }
     float GetCurrentRatio()
     {
-        return (CurrentPatternWidth + 0f) / CurrentPatternHeight;
+        return ((float)CurrentPatternWidth) / CurrentPatternHeight;
     }
 
     void SetPatternRatio(float ratio)
     {
-        CurrentPatternWidth = (int)(CurrentPatternHeight * ratio);
+        float adjustedWidth = CurrentPatternHeight * ratio;
+        if (adjustedWidth < CurrentPatternWidth)
+            CurrentPatternWidth = Math.Min(CurrentPatternWidth - 1, (int)adjustedWidth);
+        else if (adjustedWidth > CurrentPatternWidth)
+            CurrentPatternWidth = Math.Max(CurrentPatternWidth + 1, (int)adjustedWidth);
+        else
+            Debug.Log("No change in pattern width! Really? Double check ratio!");
     }
 
     public void IncreasePatternRatio(float step = 0.01f)
     {
         Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() + step);
+        Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
     public void DecreasePatternRatio(float step = 0.01f)
     {
-        SetPatternRatio(GetCurrentRatio() - step);
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        IncreasePatternRatio(-step);
     }
 
     void ResetPattern()

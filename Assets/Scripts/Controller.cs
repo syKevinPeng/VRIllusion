@@ -8,7 +8,7 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     private OVRInput.Controller LController = OVRInput.Controller.LTouch;
-    private OVRInput.Controller RController = OVRInput.Controller.RTouch;
+    // private OVRInput.Controller RController = OVRInput.Controller.RTouch;
     // raise exception if Quad is not found
     private GameObject Quad;
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
         {
             Debug.Log(" ===== Button One is pressed =====");
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
-            Quad.GetComponent<ouchi>().IncreasePatternRatio();
+            Quad.GetComponent<ouchi>().IncreasePatternRatio(0.1f);
         }
     }
 
