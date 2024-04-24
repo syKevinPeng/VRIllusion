@@ -35,7 +35,7 @@ public class NextBtnController : MonoBehaviour
         }
         else if (currentPage == InstructionPage)
         {
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("IllusionScene");
         }
 
         NxtButton.interactable = false; // avoid double click
