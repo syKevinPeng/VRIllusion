@@ -4,17 +4,16 @@ Welcome to the official repository for our research project on understanding how
 
 ## About the Project
 
-This research aims to delve into the complex dynamics of visual perception, particularly focusing on how movement influences our interpretation of visual illusions. The outcomes of this study have the potential to contribute significantly to advancements in cognitive science, user interface design, and therapeutic methodologies.
+This study aims to explore the interplay between movement and visual motion perception in humans, inspired by recent findings in rodent studies that suggest a significant enhancement in visual neural signals related to motion during physical activity. We propose a visual psychophysics study. Specifically, through visual illusions, we propose to investigate whether movement can induce stronger neural signaling in humans, thus affecting their perception of visual illusions.
 
 ### Objectives
 
 - To analyze the effects of movement on visual perception.
 - To understand the role of visual illusions in perceiving motion.
-- To contribute to the development of more intuitive user interfaces and effective therapeutic strategies.
 
 ## Participation
 
-We are currently recruiting participants for our study! If you are interested in participating or know someone who might be, please visit [link to a detailed participation page or section]. Your participation is vital to the success of our research and contributes valuable insights into the field of visual perception.
+We are currently recruiting participants for our study! If you are interested in participating or know someone who might be, please visit [Here](./RecruitmentLetter.pdf). Your participation is vital to the success of our research and contributes valuable insights into the field of visual perception.
 
 ### Eligibility Criteria
 
@@ -31,3 +30,4 @@ We are currently recruiting participants for our study! If you are interested in
 ### Project Materials
 
 Project Proposal Slides: https://docs.google.com/presentation/d/17IPVhPUU_JZ8X-7xN9bXAG6UXE_B79E_Os9v0v52hq0/edit?usp=sharing
+Midterm Project Update: https://docs.google.com/presentation/d/12DTZtaid3fYiCp0jYgHgMZ0I8Vt-ycO0dCqYvQW3aVg/edit?usp=sharing
