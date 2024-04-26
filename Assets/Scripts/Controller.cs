@@ -10,7 +10,7 @@ public class Controller : MonoBehaviour
     private OVRInput.Controller LController = OVRInput.Controller.LTouch;
     // private OVRInput.Controller RController = OVRInput.Controller.RTouch;
     // raise exception if Quad is not found
-    private GameObject Quad;
+    private GameObject RawImage;
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
     {
@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
         {
             Debug.Log(" ===== Button One is pressed =====");
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
-            Quad.GetComponent<ouchi>().IncreasePatternRatio(0.1f);
+            RawImage.GetComponent<ouchi>().IncreasePatternRatio(0.1f);
         }
     }
 
@@ -28,20 +28,20 @@ public class Controller : MonoBehaviour
         {
             Debug.Log(" ===== Button Two is pressed =====");
             // decrease the ratio of the pattern. Call DecreasePatternRatio() in ouchi.cs
-            Quad.GetComponent<ouchi>().DecreasePatternRatio();
+            RawImage.GetComponent<ouchi>().DecreasePatternRatio();
         }
     }
 
 
     void Start()
     {
-        Quad = GameObject.Find("Quad");
+        RawImage = GameObject.Find("RawImage");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Quad != null)
+        if (RawImage != null)
         {
             GetIncreaseButtonPressed();
             GetDecreaseButtonPressed();

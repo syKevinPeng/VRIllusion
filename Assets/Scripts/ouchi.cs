@@ -9,13 +9,15 @@ public class ouchi : MonoBehaviour
     // Start is called before the first frame update
     private int width = 512;
     private int height = 512;
-    public GameObject displayPlane;
-    public Material material;
+    public GameObject RawImage;
+    public GameObject Slider;
+    public GameObject UpButton;
+    public GameObject DownButton;
+    // public Material material;
     private Texture2D texture;
     private int InitPatternHeight = 8;
     private int InitPatternWidth = 32;
     private int radius = 150;
-
     private int CurrentPatternHeight;
     private int CurrentPatternWidth;
 
@@ -44,7 +46,7 @@ public class ouchi : MonoBehaviour
 
         texture.filterMode = FilterMode.Point;
         texture.Apply();
-        material.mainTexture = texture;
+        RawImage.GetComponent<UnityEngine.UI.RawImage>().texture = texture;
 
     }
     float GetCurrentRatio()
@@ -65,14 +67,21 @@ public class ouchi : MonoBehaviour
 
     public void IncreasePatternRatio(float step = 0.01f)
     {
-        Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
+        // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() + step);
-        Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
+        // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        AdjustSliderWithValue(GetCurrentRatio());
+        PressUpButton();
     }
     public void DecreasePatternRatio(float step = 0.01f)
     {
-        IncreasePatternRatio(-step);
+        // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
+        SetPatternRatio(GetCurrentRatio() - step);
+        // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        AdjustSliderWithValue(GetCurrentRatio());
+        PressDownButton();
     }
 
     void ResetPattern()
@@ -81,16 +90,41 @@ public class ouchi : MonoBehaviour
         CurrentPatternWidth = InitPatternWidth;
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
+    private void AdjustSliderWithValue(float value)
+    {
+        Slider.GetComponent<UnityEngine.UI.Slider>().value = value;
+    }
 
+    private void PressUpButton()
+    {
+        UpButton.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+        Debug.LogWarning("Up Button is pressed");
+    }
+
+    private void PressDownButton()
+    {
+        DownButton.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
+        Debug.LogWarning("Down Button is pressed");
+    }
 
     void Start()
     {
+        UpButton = GameObject.Find("UpButton");
+        DownButton = GameObject.Find("DownButton");
+        RawImage = GameObject.Find("RawImage");
+        Slider = GameObject.Find("Slider");
         // set the event system disabled by default
         Debug.Log("========== Ouchi Start ==========");
         GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
-        Debug.Log("Intial Ratio: " + GetCurrentRatio());
+        Debug.LogWarning("Intial Ratio: " + GetCurrentRatio());
+        // Config the slider
+        Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetCurrentRatio() * 1.2f;
+        Slider.GetComponent<UnityEngine.UI.Slider>().minValue = 1.0f;
+        Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
+        Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
+
     }
 
     // Update is called once per frame
