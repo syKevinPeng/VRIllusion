@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ouchi : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class ouchi : MonoBehaviour
     private int radius = 150;
     private int CurrentPatternHeight;
     private int CurrentPatternWidth;
+
+
 
     void GeneratePattern(int PatternHeight, int PatternWidth)
     {
@@ -72,7 +75,6 @@ public class ouchi : MonoBehaviour
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
         AdjustSliderWithValue(GetCurrentRatio());
-        PressUpButton();
     }
     public void DecreasePatternRatio(float step = 0.01f)
     {
@@ -81,7 +83,6 @@ public class ouchi : MonoBehaviour
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
         AdjustSliderWithValue(GetCurrentRatio());
-        PressDownButton();
     }
 
     void ResetPattern()
@@ -95,17 +96,6 @@ public class ouchi : MonoBehaviour
         Slider.GetComponent<UnityEngine.UI.Slider>().value = value;
     }
 
-    private void PressUpButton()
-    {
-        UpButton.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
-        Debug.LogWarning("Up Button is pressed");
-    }
-
-    private void PressDownButton()
-    {
-        DownButton.GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
-        Debug.LogWarning("Down Button is pressed");
-    }
 
     void Start()
     {
@@ -113,6 +103,20 @@ public class ouchi : MonoBehaviour
         DownButton = GameObject.Find("DownButton");
         RawImage = GameObject.Find("RawImage");
         Slider = GameObject.Find("Slider");
+
+        // // load two Sprite objects
+        // Sprite UpArrowBlue = Resources.Load<Sprite>("Image/uparrow_blue");
+        // Sprite UpArrowRed = Resources.Load<Sprite>("Image/uparrow_red");
+
+        // if (UpArrowBlue == null)
+        // {
+        //     Debug.LogError("UpArrowBlue is null");
+        // }
+        // if (UpArrowRed == null)
+        // {
+        //     Debug.LogError("UpArrowRed is null");
+        // }
+
         // set the event system disabled by default
         Debug.Log("========== Ouchi Start ==========");
         GeneratePattern(InitPatternHeight, InitPatternWidth);
@@ -126,6 +130,9 @@ public class ouchi : MonoBehaviour
         Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
 
     }
+
+
+
 
     // Update is called once per frame
     void Update()
