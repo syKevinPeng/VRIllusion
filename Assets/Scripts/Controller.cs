@@ -8,15 +8,17 @@ using System.Threading;
 public class Controller : MonoBehaviour
 {
     private OVRInput.Controller LController = OVRInput.Controller.LTouch;
-    // private OVRInput.Controller RController = OVRInput.Controller.RTouch;
+    private OVRInput.Controller RController = OVRInput.Controller.RTouch;
     // raise exception if Quad is not found
     private GameObject RawImage;
     private GameObject UpButton;
     private GameObject DownButton;
+
+    public GameObject MenuCanvas;
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
     {
-        if (OVRInput.Get(OVRInput.Button.Two, LController))
+        if (OVRInput.Get(OVRInput.Button.Two, RController))
         {
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<ouchi>().IncreasePatternRatio(0.1f);
@@ -24,7 +26,7 @@ public class Controller : MonoBehaviour
 
 
         }
-        if (OVRInput.GetUp(OVRInput.Button.Two, LController))
+        if (OVRInput.GetUp(OVRInput.Button.Two, RController))
         {
             UpButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/uparrow");
         }
@@ -32,16 +34,34 @@ public class Controller : MonoBehaviour
 
     void GetDecreaseButtonPressed()
     {
-        if (OVRInput.Get(OVRInput.Button.One, LController))
+        if (OVRInput.Get(OVRInput.Button.One, RController))
         {
             // decrease the ratio of the pattern. Call DecreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<ouchi>().DecreasePatternRatio();
             DownButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/downarrow_blue");
 
         }
-        if (OVRInput.GetUp(OVRInput.Button.One, LController))
+        if (OVRInput.GetUp(OVRInput.Button.One, RController))
         {
             DownButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/downarrow");
+        }
+    }
+
+    void GetMenuButtonPressed()
+    {
+        if (OVRInput.GetUp(OVRInput.Button.Start, LController) || OVRInput.GetUp(OVRInput.Button.One, LController) || OVRInput.GetUp(OVRInput.Button.Two, LController))
+        {
+            // show the menu. Call EnableMenu() in MenuController.cs
+            MenuCanvas.GetComponent<MenuController>().EnableMenu();
+        }
+    }
+
+    void GetMenuButtonReleased()
+    {
+        if (OVRInput.GetUp(OVRInput.Button.Start, LController) || OVRInput.GetUp(OVRInput.Button.One, LController) || OVRInput.GetUp(OVRInput.Button.Two, LController))
+        {
+            // hide the menu. Call DisableMenu() in MenuController.cs
+            MenuCanvas.GetComponent<MenuController>().DisableMenu();
         }
     }
 
@@ -51,6 +71,8 @@ public class Controller : MonoBehaviour
         RawImage = GameObject.Find("RawImage");
         UpButton = GameObject.Find("UpButton");
         DownButton = GameObject.Find("DownButton");
+        MenuCanvas = GameObject.Find("MenuCanvas");
+        // Debug.LogError("MenuCanvas: " + MenuCanvas);
     }
 
     // Update is called once per frame
@@ -61,5 +83,15 @@ public class Controller : MonoBehaviour
             GetIncreaseButtonPressed();
             GetDecreaseButtonPressed();
         }
+        if (!MenuCanvas.activeSelf)
+        {
+            GetMenuButtonPressed();
+        }
+        else if (MenuCanvas.activeSelf)
+        {
+            GetMenuButtonReleased();
+        }
+
+
     }
 }
