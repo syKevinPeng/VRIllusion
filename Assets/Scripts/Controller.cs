@@ -16,16 +16,15 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
     {
-        if (OVRInput.Get(OVRInput.Button.One, LController))
+        if (OVRInput.Get(OVRInput.Button.Two, LController))
         {
-            Debug.Log(" ===== Button One is pressed =====");
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<ouchi>().IncreasePatternRatio(0.1f);
             UpButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/uparrow_blue");
 
 
         }
-        if (OVRInput.GetUp(OVRInput.Button.One, LController))
+        if (OVRInput.GetUp(OVRInput.Button.Two, LController))
         {
             UpButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/uparrow");
         }
@@ -33,15 +32,14 @@ public class Controller : MonoBehaviour
 
     void GetDecreaseButtonPressed()
     {
-        if (OVRInput.Get(OVRInput.Button.Two, LController))
+        if (OVRInput.Get(OVRInput.Button.One, LController))
         {
-            Debug.Log(" ===== Button Two is pressed =====");
             // decrease the ratio of the pattern. Call DecreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<ouchi>().DecreasePatternRatio();
             DownButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/downarrow_blue");
 
         }
-        if (OVRInput.GetUp(OVRInput.Button.Two, LController))
+        if (OVRInput.GetUp(OVRInput.Button.One, LController))
         {
             DownButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/downarrow");
         }
