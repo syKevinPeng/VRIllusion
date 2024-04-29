@@ -49,8 +49,7 @@ public class TimelineController : MonoBehaviour
         if (!isStationaryLoaded && !isMovingLoaded)
         {
             // if both scenes are not loaded, randomly load one of them
-            // if (UnityEngine.Random.Range(0, 2) == 0)
-            if (false)
+            if (UnityEngine.Random.Range(0, 2) == 0)
             {
                 Debug.Log("Loading stationary scene");
                 LoadStationaryScene();

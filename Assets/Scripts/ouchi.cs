@@ -14,6 +14,7 @@ public class ouchi : MonoBehaviour
     public GameObject Slider;
     public GameObject UpButton;
     public GameObject DownButton;
+    public GameObject IllusionCanvas;
     // public Material material;
     private Texture2D texture;
     private int InitPatternHeight = 8;
@@ -96,33 +97,31 @@ public class ouchi : MonoBehaviour
         Slider.GetComponent<UnityEngine.UI.Slider>().value = value;
     }
 
+    public void HideCanvas()
+    {
+        IllusionCanvas.SetActive(false);
+    }
+
+    public void ShowCanvas()
+    {
+        IllusionCanvas.SetActive(true);
+    }
+
 
     void Start()
     {
+
         UpButton = GameObject.Find("UpButton");
         DownButton = GameObject.Find("DownButton");
         RawImage = GameObject.Find("RawImage");
         Slider = GameObject.Find("Slider");
-
-        // // load two Sprite objects
-        // Sprite UpArrowBlue = Resources.Load<Sprite>("Image/uparrow_blue");
-        // Sprite UpArrowRed = Resources.Load<Sprite>("Image/uparrow_red");
-
-        // if (UpArrowBlue == null)
-        // {
-        //     Debug.LogError("UpArrowBlue is null");
-        // }
-        // if (UpArrowRed == null)
-        // {
-        //     Debug.LogError("UpArrowRed is null");
-        // }
+        IllusionCanvas = GameObject.Find("IllusionCanvas");
 
         // set the event system disabled by default
         Debug.Log("========== Ouchi Start ==========");
         GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
-        Debug.LogWarning("Intial Ratio: " + GetCurrentRatio());
         // Config the slider
         Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetCurrentRatio() * 1.2f;
         Slider.GetComponent<UnityEngine.UI.Slider>().minValue = 1.0f;

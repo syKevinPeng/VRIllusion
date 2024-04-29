@@ -14,7 +14,6 @@ public class Controller : MonoBehaviour
     private GameObject UpButton;
     private GameObject DownButton;
 
-    public GameObject MenuCanvas;
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
     {
@@ -47,23 +46,7 @@ public class Controller : MonoBehaviour
         }
     }
 
-    void GetMenuButtonPressed()
-    {
-        if (OVRInput.GetUp(OVRInput.Button.Start, LController) || OVRInput.GetUp(OVRInput.Button.One, LController) || OVRInput.GetUp(OVRInput.Button.Two, LController))
-        {
-            // show the menu. Call EnableMenu() in MenuController.cs
-            MenuCanvas.GetComponent<MenuController>().EnableMenu();
-        }
-    }
 
-    void GetMenuButtonReleased()
-    {
-        if (OVRInput.GetUp(OVRInput.Button.Start, LController) || OVRInput.GetUp(OVRInput.Button.One, LController) || OVRInput.GetUp(OVRInput.Button.Two, LController))
-        {
-            // hide the menu. Call DisableMenu() in MenuController.cs
-            MenuCanvas.GetComponent<MenuController>().DisableMenu();
-        }
-    }
 
 
     void Start()
@@ -71,8 +54,6 @@ public class Controller : MonoBehaviour
         RawImage = GameObject.Find("RawImage");
         UpButton = GameObject.Find("UpButton");
         DownButton = GameObject.Find("DownButton");
-        MenuCanvas = GameObject.Find("MenuCanvas");
-        // Debug.LogError("MenuCanvas: " + MenuCanvas);
     }
 
     // Update is called once per frame
@@ -83,15 +64,6 @@ public class Controller : MonoBehaviour
             GetIncreaseButtonPressed();
             GetDecreaseButtonPressed();
         }
-        if (!MenuCanvas.activeSelf)
-        {
-            GetMenuButtonPressed();
-        }
-        else if (MenuCanvas.activeSelf)
-        {
-            GetMenuButtonReleased();
-        }
-
 
     }
 }
