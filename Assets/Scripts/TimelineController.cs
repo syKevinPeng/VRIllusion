@@ -41,6 +41,7 @@ public class TimelineController : MonoBehaviour
         {
             LoadMovingScene();
             isMovingLoaded = true;
+
         }
         else if (!isStationaryLoaded && isMovingLoaded)
         {
@@ -49,7 +50,8 @@ public class TimelineController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Expereinment is over, both scenes are loaded.");
+            Debug.Log("Expereinment is over, both scenes are loaded.");
+            Debug.Log(" == Total Time: " + (Time.time - startTime) + " == ");
         }
 
     }

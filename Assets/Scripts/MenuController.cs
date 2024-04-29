@@ -18,10 +18,14 @@ public class MenuController : MonoBehaviour
     public void EnableMenu()
     {
         MenuCanvas.SetActive(true);
+        // pause the game
+        Time.timeScale = 0;
     }
     public void DisableMenu()
     {
         MenuCanvas.SetActive(false);
+        // resume the game
+        Time.timeScale = 1;
     }
 
 

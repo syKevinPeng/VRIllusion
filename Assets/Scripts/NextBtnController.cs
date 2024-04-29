@@ -17,6 +17,7 @@ public class NextBtnController : MonoBehaviour
     public Toggle BSPCheckBox1;
     public Toggle BSPCheckBox2;
     public Toggle BSPCheckBox3;
+    private GameObject TimelineController;
     public void NextBtnClick()
     {
         Debug.LogWarning("Clicked Once");
@@ -35,7 +36,7 @@ public class NextBtnController : MonoBehaviour
         }
         else if (currentPage == InstructionPage)
         {
-            SceneManager.LoadScene("IllusionScene");
+            TimelineController.GetComponent<TimelineController>().GetNextScene();
         }
 
         NxtButton.interactable = false; // avoid double click
@@ -56,6 +57,9 @@ public class NextBtnController : MonoBehaviour
 
     void Start()
     {
+        TimelineController = GameObject.Find("TimelineController");
+
+
         if (WelcomePage == null)
         {
             Debug.LogError("<color=red>WelcomePage </color>");
