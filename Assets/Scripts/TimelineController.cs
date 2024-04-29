@@ -17,34 +17,62 @@ public class TimelineController : MonoBehaviour
         SceneManager.LoadScene("IllusionStationaryScene");
 
     }
+    IEnumerator LoadAsyncScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("IllusionInMotionScene");
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            Debug.LogWarning("Loading progress: " + asyncLoad.progress);
+            // if (asyncLoad.progress >= 0.9f)
+            if (isMovingSceneLoaded())
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+    }
+
     private void LoadMovingScene()
     {
-        SceneManager.LoadScene("IllusionMovingScene");
+        StartCoroutine(LoadAsyncScene());
+    }
+    private Boolean isMovingSceneLoaded()
+    {
+        // check if the camera is moving
+        GameObject camera = GameObject.Find("OVRCameraRigInteraction");
+        return camera.transform.hasChanged;
+
     }
     public void GetNextScene()
     {
         if (!isStationaryLoaded && !isMovingLoaded)
         {
             // if both scenes are not loaded, randomly load one of them
-            if (UnityEngine.Random.Range(0, 2) == 0)
+            // if (UnityEngine.Random.Range(0, 2) == 0)
+            if (false)
             {
+                Debug.Log("Loading stationary scene");
                 LoadStationaryScene();
                 isStationaryLoaded = true;
             }
             else
             {
+                Debug.Log("Loading moving scene");
                 LoadMovingScene();
                 isMovingLoaded = true;
             }
         }
         else if (isStationaryLoaded && !isMovingLoaded)
         {
+            Debug.Log("Loading moving scene");
             LoadMovingScene();
             isMovingLoaded = true;
 
         }
         else if (!isStationaryLoaded && isMovingLoaded)
         {
+            Debug.Log("Loading stationary scene");
             LoadStationaryScene();
             isStationaryLoaded = true;
         }
