@@ -14,8 +14,8 @@ public class IllusionPatternLoader : MonoBehaviour
     {
         RawImage = GameObject.Find("RawImage");
 
-        abstractIllusionPattern ouchiLength = new ouchiLength();
-        abstractIllusionPattern ouchiColor = new ouchiColor();
+        abstractIllusionPattern ouchiLength = new ouchiLength(stepSize: 0.1f);
+        abstractIllusionPattern ouchiColor = new ouchiColor(stepSize: 0.05f);
 
         allPatterns.Add(ouchiLength);
         allPatterns.Add(ouchiColor);
@@ -23,13 +23,13 @@ public class IllusionPatternLoader : MonoBehaviour
         currentPattern = ouchiColor;
     }
 
-    public void IncreasePatternRatio(float ratio)
+    public void IncreasePatternRatio()
     {
-        currentPattern.IncreasePatternRatio(ratio);
+        currentPattern.IncreasePatternRatio();
     }
-    public void DecreasePatternRatio(float ratio)
+    public void DecreasePatternRatio()
     {
-        currentPattern.DecreasePatternRatio(ratio);
+        currentPattern.DecreasePatternRatio();
     }
     public float GetCurrentRatio()
     {

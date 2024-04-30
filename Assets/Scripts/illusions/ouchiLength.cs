@@ -15,14 +15,16 @@ public class ouchiLength : abstractIllusionPattern
     public int radius = 150;
     private int CurrentPatternHeight;
     private int CurrentPatternWidth;
+    private float stepSize;
 
     //constructor
-    public ouchiLength()
+    public ouchiLength(float stepSize = 0.1f)
     {
         Debug.Log("========== Ouchi Start ==========");
         texture = GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
+        this.stepSize = stepSize;
     }
 
 
@@ -106,17 +108,17 @@ public class ouchiLength : abstractIllusionPattern
             Debug.Log("No change in pattern width! Really? Double check ratio!");
     }
 
-    public override void IncreasePatternRatio(float step = 0.01f)
+    public override void IncreasePatternRatio()
     {
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
-        SetPatternRatio(GetCurrentRatio() + step);
+        SetPatternRatio(GetCurrentRatio() + stepSize);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
-    public override void DecreasePatternRatio(float step = 0.01f)
+    public override void DecreasePatternRatio()
     {
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
-        SetPatternRatio(GetCurrentRatio() - step);
+        SetPatternRatio(GetCurrentRatio() - stepSize);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }

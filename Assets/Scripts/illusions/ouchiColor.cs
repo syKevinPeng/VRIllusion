@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class ouchiColor : ouchiLength
 {
-    private int foregroundColor = 1;
-    private int backgroundColor = 255;
+    private float foregroundColor = 0.0f;
+    private float backgroundColor = 1.0f;
+    private float stepSize;
 
-    public ouchiColor()
+    public ouchiColor(float stepSize = 0.01f)
     {
         Debug.Log("========== Ouchi Color Start ==========");
         texture = GeneratePattern();
+        this.stepSize = stepSize;
     }
 
     public override Texture2D GeneratePattern()
     {
-        Color fgColor = new Color(foregroundColor, foregroundColor, foregroundColor);
-        Color bgColor = new Color(backgroundColor, backgroundColor, backgroundColor);
+        Color fgColor = new Color(foregroundColor, foregroundColor, foregroundColor, 1);
+        Color bgColor = new Color(backgroundColor, backgroundColor, backgroundColor, 1);
         texture = new Texture2D(width, height);
         // define the background pattern
         for (int h = 0; h < height; h++)
@@ -44,30 +46,38 @@ public class ouchiColor : ouchiLength
 
     public override float GetCurrentRatio()
     {
-        return (float)backgroundColor / foregroundColor;
+        if (foregroundColor == 0)
+        {
+            return 0.0f;
+        }
+        else
+        {
+            return (float)backgroundColor / foregroundColor;
+        }
     }
 
     public override float GetInitRatio()
     {
-        return 255.0f;
+        return 10;
     }
 
-    public override void IncreasePatternRatio(float step)
+    public override void DecreasePatternRatio()
     {
-        if (foregroundColor + step <= 255)
+
+        if (foregroundColor + stepSize <= 1.0f)
         {
-            foregroundColor += (int)step;
-            backgroundColor -= (int)step;
+            foregroundColor += stepSize;
+            backgroundColor -= stepSize;
         }
         texture = GeneratePattern();
     }
 
-    public override void DecreasePatternRatio(float step)
+    public override void IncreasePatternRatio()
     {
-        if (backgroundColor - step >= 0)
+        if (backgroundColor - stepSize >= 0.0f)
         {
-            backgroundColor += (int)step;
-            foregroundColor -= (int)step;
+            backgroundColor += stepSize;
+            foregroundColor -= stepSize;
         }
         texture = GeneratePattern();
     }

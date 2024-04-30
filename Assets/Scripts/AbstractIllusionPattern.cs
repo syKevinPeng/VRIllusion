@@ -13,9 +13,9 @@ public abstract class abstractIllusionPattern
     // get the current ratio of the pattern
     public abstract float GetCurrentRatio();
     // increase the ratio of the pattern by step
-    public abstract void IncreasePatternRatio(float step);
+    public abstract void IncreasePatternRatio();
     // decrease the ratio of the pattern by step
-    public abstract void DecreasePatternRatio(float step);
+    public abstract void DecreasePatternRatio();
     // get the initial ratio of the pattern
     public abstract float GetInitRatio();
 
