@@ -5,27 +5,59 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ouchi : MonoBehaviour
+public class ouchi : abstractIllusionPattern
 {
     // Start is called before the first frame update
     private int width = 512;
     private int height = 512;
-    public GameObject RawImage;
-    // public GameObject Slider;
-    // public GameObject UpButton;
-    // public GameObject DownButton;
-    // public GameObject IllusionCanvas;
-    // public Material material;
-    private Texture2D texture;
     private int InitPatternHeight = 8;
     private int InitPatternWidth = 32;
     private int radius = 150;
     private int CurrentPatternHeight;
     private int CurrentPatternWidth;
 
+    //constructor
+    public ouchi(GameObject RawImage)
+    {
+        this.RawImage = RawImage;
+        Debug.Log("========== Ouchi Start ==========");
+        GeneratePattern(InitPatternHeight, InitPatternWidth);
+        CurrentPatternHeight = InitPatternHeight;
+        CurrentPatternWidth = InitPatternWidth;
+    }
 
 
-    void GeneratePattern(int PatternHeight, int PatternWidth)
+
+    public override Texture2D GeneratePattern()
+    {
+        texture = new Texture2D(width, height);
+        // define the background pattern
+        for (int h = 0; h < height; h++)
+            for (int w = 0; w < width; w++)
+            {
+                texture.SetPixel(w, h, (w / CurrentPatternWidth % 2 == h / CurrentPatternHeight % 2) ? Color.white : Color.black);
+            }
+        // define the center circular pattern
+        int centerX = width / 2;
+        int centerY = height / 2;
+        for (int h = 0; h < height; h++)
+            for (int w = 0; w < width; w++)
+            {
+                if (Mathf.Pow(w - centerX, 2) + Mathf.Pow(h - centerY, 2) < Mathf.Pow(radius, 2))
+                {
+                    // texture.SetPixel(w, h, Color.red);
+                    texture.SetPixel(h, w, ((w / CurrentPatternWidth) % 2 == (h / CurrentPatternHeight) % 2) ? Color.black : Color.white);
+                }
+            }
+
+
+        texture.filterMode = FilterMode.Point;
+        texture.Apply();
+        return texture;
+
+    }
+
+    public Texture2D GeneratePattern(int PatternHeight, int PatternWidth)
     {
         texture = new Texture2D(width, height);
         // define the background pattern
@@ -50,15 +82,17 @@ public class ouchi : MonoBehaviour
 
         texture.filterMode = FilterMode.Point;
         texture.Apply();
-        RawImage.GetComponent<UnityEngine.UI.RawImage>().texture = texture;
+        // RawImage.GetComponent<UnityEngine.UI.RawImage>().texture = texture;
+        return texture;
 
     }
-    public float GetCurrentRatio()
+
+    public override float GetCurrentRatio()
     {
         return ((float)CurrentPatternWidth) / CurrentPatternHeight;
     }
 
-    public float GetInitRatio()
+    public override float GetInitRatio()
     {
         return ((float)InitPatternWidth) / InitPatternHeight;
     }
@@ -80,7 +114,6 @@ public class ouchi : MonoBehaviour
         SetPatternRatio(GetCurrentRatio() + step);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
-        // AdjustSliderWithValue(GetCurrentRatio());
     }
     public void DecreasePatternRatio(float step = 0.01f)
     {
@@ -88,7 +121,6 @@ public class ouchi : MonoBehaviour
         SetPatternRatio(GetCurrentRatio() - step);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
-        // AdjustSliderWithValue(GetCurrentRatio());
     }
 
     void ResetPattern()
@@ -97,38 +129,6 @@ public class ouchi : MonoBehaviour
         CurrentPatternWidth = InitPatternWidth;
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
-    // private void AdjustSliderWithValue(float value)
-    // {
-    //     Slider.GetComponent<UnityEngine.UI.Slider>().value = value;
-    // }
-
-    // public void HideCanvas()
-    // {
-    //     IllusionCanvas.SetActive(false);
-    // }
-
-    // public void ShowCanvas()
-    // {
-    //     IllusionCanvas.SetActive(true);
-    // }
 
 
-    void Start()
-    {
-        // set the event system disabled by default
-        Debug.Log("========== Ouchi Start ==========");
-        GeneratePattern(InitPatternHeight, InitPatternWidth);
-        CurrentPatternHeight = InitPatternHeight;
-        CurrentPatternWidth = InitPatternWidth;
-
-    }
-
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
