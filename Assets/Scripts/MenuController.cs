@@ -21,16 +21,12 @@ public class MenuController : MonoBehaviour
     public void EnableMenu()
     {
         MenuCanvas.SetActive(true);
-        // hide canvas
-        IllusionCanvas.SetActive(false);
         // pause the game
         Time.timeScale = 0;
     }
     public void DisableMenu()
     {
         MenuCanvas.SetActive(false);
-        // show canvas
-        IllusionCanvas.SetActive(true);
         // resume the game
         Time.timeScale = 1;
     }
@@ -57,8 +53,9 @@ public class MenuController : MonoBehaviour
     public void GetToggleState()
     {
         // get the state of the toggle
-        ToggleState = MenuCanvas.transform.Find("Toggle").GetComponent<UnityEngine.UI.Toggle>().isOn;
+        ToggleState = MenuCanvas.transform.Find("Toggle").transform.Find("Switcher").GetComponent<UISwitcher.UISwitcher>().isOn;
         Debug.LogError(ToggleState);
+        IllusionCanvas.SetActive(ToggleState);
     }
 
     void Start()
