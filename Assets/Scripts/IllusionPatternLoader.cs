@@ -15,7 +15,7 @@ public class IllusionPatternLoader : MonoBehaviour
         RawImage = GameObject.Find("RawImage");
 
         abstractIllusionPattern ouchiLength = new ouchiLength(stepSize: 0.1f);
-        abstractIllusionPattern ouchiColor = new ouchiColor(stepSize: 0.05f);
+        abstractIllusionPattern ouchiColor = new ouchiColor(stepSize: 0.04f);
 
         allPatterns.Add(ouchiLength);
         allPatterns.Add(ouchiColor);

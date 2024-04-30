@@ -49,7 +49,7 @@ public class ouchiColor : ouchiLength
         Debug.LogWarning("ForegroundColor: " + foregroundColor + " BackgroundColor: " + backgroundColor);
         if (foregroundColor == 0)
         {
-            return 0.0f;
+            return 10f;
         }
         else
         {
@@ -66,17 +66,22 @@ public class ouchiColor : ouchiLength
     public override void DecreasePatternRatio()
     {
 
-        if (foregroundColor + stepSize <= 1.0f)
+        if (backgroundColor > foregroundColor)
         {
             foregroundColor += stepSize;
             backgroundColor -= stepSize;
         }
+        else
+        {
+            foregroundColor = backgroundColor = 0.5f;
+        }
+
         texture = GeneratePattern();
     }
 
     public override void IncreasePatternRatio()
     {
-        if (backgroundColor >= foregroundColor)
+        if (foregroundColor - stepSize >= 0.0f)
         {
             backgroundColor += stepSize;
             foregroundColor -= stepSize;
