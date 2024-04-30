@@ -11,10 +11,10 @@ public class ouchi : MonoBehaviour
     private int width = 512;
     private int height = 512;
     public GameObject RawImage;
-    public GameObject Slider;
-    public GameObject UpButton;
-    public GameObject DownButton;
-    public GameObject IllusionCanvas;
+    // public GameObject Slider;
+    // public GameObject UpButton;
+    // public GameObject DownButton;
+    // public GameObject IllusionCanvas;
     // public Material material;
     private Texture2D texture;
     private int InitPatternHeight = 8;
@@ -53,9 +53,14 @@ public class ouchi : MonoBehaviour
         RawImage.GetComponent<UnityEngine.UI.RawImage>().texture = texture;
 
     }
-    float GetCurrentRatio()
+    public float GetCurrentRatio()
     {
         return ((float)CurrentPatternWidth) / CurrentPatternHeight;
+    }
+
+    public float GetInitRatio()
+    {
+        return ((float)InitPatternWidth) / InitPatternHeight;
     }
 
     void SetPatternRatio(float ratio)
@@ -75,7 +80,7 @@ public class ouchi : MonoBehaviour
         SetPatternRatio(GetCurrentRatio() + step);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
-        AdjustSliderWithValue(GetCurrentRatio());
+        // AdjustSliderWithValue(GetCurrentRatio());
     }
     public void DecreasePatternRatio(float step = 0.01f)
     {
@@ -83,7 +88,7 @@ public class ouchi : MonoBehaviour
         SetPatternRatio(GetCurrentRatio() - step);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
-        AdjustSliderWithValue(GetCurrentRatio());
+        // AdjustSliderWithValue(GetCurrentRatio());
     }
 
     void ResetPattern()
@@ -92,41 +97,29 @@ public class ouchi : MonoBehaviour
         CurrentPatternWidth = InitPatternWidth;
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
-    private void AdjustSliderWithValue(float value)
-    {
-        Slider.GetComponent<UnityEngine.UI.Slider>().value = value;
-    }
+    // private void AdjustSliderWithValue(float value)
+    // {
+    //     Slider.GetComponent<UnityEngine.UI.Slider>().value = value;
+    // }
 
-    public void HideCanvas()
-    {
-        IllusionCanvas.SetActive(false);
-    }
+    // public void HideCanvas()
+    // {
+    //     IllusionCanvas.SetActive(false);
+    // }
 
-    public void ShowCanvas()
-    {
-        IllusionCanvas.SetActive(true);
-    }
+    // public void ShowCanvas()
+    // {
+    //     IllusionCanvas.SetActive(true);
+    // }
 
 
     void Start()
     {
-
-        UpButton = GameObject.Find("UpButton");
-        DownButton = GameObject.Find("DownButton");
-        RawImage = GameObject.Find("RawImage");
-        Slider = GameObject.Find("Slider");
-        IllusionCanvas = GameObject.Find("IllusionCanvas");
-
         // set the event system disabled by default
         Debug.Log("========== Ouchi Start ==========");
         GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
-        // Config the slider
-        Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetCurrentRatio() * 1.2f;
-        Slider.GetComponent<UnityEngine.UI.Slider>().minValue = 1.0f;
-        Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
-        Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
 
     }
 

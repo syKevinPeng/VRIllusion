@@ -251,10 +251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RawImage: {fileID: 26335390}
-  Slider: {fileID: 1277576637}
-  UpButton: {fileID: 0}
-  DownButton: {fileID: 0}
-  IllusionCanvas: {fileID: 0}
 --- !u!114 &26335393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2642,7 +2638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1570219036
 Transform:
   m_ObjectHideFlags: 0
