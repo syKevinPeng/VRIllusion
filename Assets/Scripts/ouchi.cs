@@ -107,14 +107,14 @@ public class ouchi : abstractIllusionPattern
             Debug.Log("No change in pattern width! Really? Double check ratio!");
     }
 
-    public void IncreasePatternRatio(float step = 0.01f)
+    public override void IncreasePatternRatio(float step = 0.01f)
     {
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() + step);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
-    public void DecreasePatternRatio(float step = 0.01f)
+    public override void DecreasePatternRatio(float step = 0.01f)
     {
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() - step);
