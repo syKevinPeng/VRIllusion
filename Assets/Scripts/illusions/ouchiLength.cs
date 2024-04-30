@@ -5,19 +5,19 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ouchi : abstractIllusionPattern
+public class ouchiLength : abstractIllusionPattern
 {
     // Start is called before the first frame update
-    private int width = 512;
-    private int height = 512;
-    private int InitPatternHeight = 8;
-    private int InitPatternWidth = 32;
-    private int radius = 150;
+    public int width = 512;
+    public int height = 512;
+    public int InitPatternHeight = 8;
+    public int InitPatternWidth = 32;
+    public int radius = 150;
     private int CurrentPatternHeight;
     private int CurrentPatternWidth;
 
     //constructor
-    public ouchi()
+    public ouchiLength()
     {
         Debug.Log("========== Ouchi Start ==========");
         texture = GeneratePattern(InitPatternHeight, InitPatternWidth);
@@ -81,7 +81,6 @@ public class ouchi : abstractIllusionPattern
 
         texture.filterMode = FilterMode.Point;
         texture.Apply();
-        // RawImage.GetComponent<UnityEngine.UI.RawImage>().texture = texture;
         return texture;
 
     }

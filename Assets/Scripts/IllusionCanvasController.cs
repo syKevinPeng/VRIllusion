@@ -14,6 +14,7 @@ public class IllusionCanvasController : MonoBehaviour
     private GameObject Slider;
     private GameObject UpButton;
     private GameObject DownButton;
+    public float stepSize = 0.1f;
 
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
@@ -21,7 +22,7 @@ public class IllusionCanvasController : MonoBehaviour
         if (OVRInput.Get(OVRInput.Button.Two, RController))
         {
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
-            RawImage.GetComponent<IllusionPatternLoader>().IncreasePatternRatio(0.1f);
+            RawImage.GetComponent<IllusionPatternLoader>().IncreasePatternRatio(stepSize);
             UpButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/uparrow_blue");
             AdjustSliderWithValue(GetCurrentRatio());
 
@@ -38,7 +39,7 @@ public class IllusionCanvasController : MonoBehaviour
         if (OVRInput.Get(OVRInput.Button.One, RController))
         {
             // decrease the ratio of the pattern. Call DecreasePatternRatio() in ouchi.cs
-            RawImage.GetComponent<IllusionPatternLoader>().DecreasePatternRatio(0.1f);
+            RawImage.GetComponent<IllusionPatternLoader>().DecreasePatternRatio(stepSize);
             DownButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/downarrow_blue");
             AdjustSliderWithValue(GetCurrentRatio());
 
