@@ -17,11 +17,10 @@ public class ouchi : abstractIllusionPattern
     private int CurrentPatternWidth;
 
     //constructor
-    public ouchi(GameObject RawImage)
+    public ouchi()
     {
-        this.RawImage = RawImage;
         Debug.Log("========== Ouchi Start ==========");
-        GeneratePattern(InitPatternHeight, InitPatternWidth);
+        texture = GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
     }

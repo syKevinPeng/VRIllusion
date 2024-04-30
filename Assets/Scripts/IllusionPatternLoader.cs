@@ -9,7 +9,9 @@ public class IllusionPatternLoader : MonoBehaviour
 
     void Start()
     {
+        abstractIllusionPattern ouchi = new ouchi();
 
+        allPatterns.Add(ouchi);
 
     }
 
