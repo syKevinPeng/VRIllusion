@@ -130,5 +130,14 @@ public class ouchiLength : abstractIllusionPattern
         GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
 
+    public override float GetMinRatio()
+    {
+        return 0.1f;
+    }
+    public override float GetMaxRatio()
+    {
+        return GetInitRatio() * 1.2f;
+    }
+
 
 }

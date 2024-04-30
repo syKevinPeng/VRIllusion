@@ -39,6 +39,14 @@ public class IllusionPatternLoader : MonoBehaviour
     {
         return currentPattern.GetInitRatio();
     }
+    public float GetMinRatio()
+    {
+        return currentPattern.GetMinRatio();
+    }
+    public float GetMaxRatio()
+    {
+        return currentPattern.GetMaxRatio();
+    }
 
 
     // Update is called once per frame

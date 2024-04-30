@@ -73,6 +73,16 @@ public class IllusionCanvasController : MonoBehaviour
         return RawImage.GetComponent<IllusionPatternLoader>().GetInitRatio();
     }
 
+    private float GetMinRatio()
+    {
+        return RawImage.GetComponent<IllusionPatternLoader>().GetMinRatio();
+    }
+
+    private float GetMaxRatio()
+    {
+        return RawImage.GetComponent<IllusionPatternLoader>().GetMaxRatio();
+    }
+
 
 
 
@@ -84,8 +94,8 @@ public class IllusionCanvasController : MonoBehaviour
         Slider = GameObject.Find("Slider");
         Debug.Log("Current Ratio: " + GetCurrentRatio() + " Init Ratio: " + GetInitRatio());
         // Config the slider
-        Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetInitRatio() * 1.2f;
-        Slider.GetComponent<UnityEngine.UI.Slider>().minValue = 1.0f;
+        Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetMaxRatio();
+        Slider.GetComponent<UnityEngine.UI.Slider>().minValue = GetMinRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
     }

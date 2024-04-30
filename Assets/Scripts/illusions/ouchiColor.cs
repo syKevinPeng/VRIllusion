@@ -46,6 +46,7 @@ public class ouchiColor : ouchiLength
 
     public override float GetCurrentRatio()
     {
+        Debug.LogWarning("ForegroundColor: " + foregroundColor + " BackgroundColor: " + backgroundColor);
         if (foregroundColor == 0)
         {
             return 0.0f;
@@ -54,6 +55,7 @@ public class ouchiColor : ouchiLength
         {
             return (float)backgroundColor / foregroundColor;
         }
+
     }
 
     public override float GetInitRatio()
@@ -74,7 +76,7 @@ public class ouchiColor : ouchiLength
 
     public override void IncreasePatternRatio()
     {
-        if (backgroundColor - stepSize >= 0.0f)
+        if (backgroundColor >= foregroundColor)
         {
             backgroundColor += stepSize;
             foregroundColor -= stepSize;

@@ -18,5 +18,7 @@ public abstract class abstractIllusionPattern
     public abstract void DecreasePatternRatio();
     // get the initial ratio of the pattern
     public abstract float GetInitRatio();
+    public abstract float GetMinRatio();
+    public abstract float GetMaxRatio();
 
 }
