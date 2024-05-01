@@ -19,9 +19,9 @@ public class TimelineController : MonoBehaviour
         SceneManager.LoadScene("IllusionStationaryScene");
 
     }
-    IEnumerator LoadAsyncScene()
+    IEnumerator LoadAsyncScene(string sceneName = "IllusionInMotionScene")
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("IllusionInMotionScene");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
         asyncLoad.allowSceneActivation = false;
         while (!asyncLoad.isDone)
         {
@@ -49,6 +49,14 @@ public class TimelineController : MonoBehaviour
         return camera.transform.hasChanged;
 
     }
+
+    private void LoadBreakScene()
+    {
+        StartCoroutine(LoadAsyncScene("WelcomeScene"));
+        GameObject.Find("MenuCanvas").GetComponent<WelcomeCanvasController>().SetupBreakPage();
+
+
+    }
     public void GetNextScene()
     {
         if (!isStationaryLoaded && !isMovingLoaded)
@@ -70,15 +78,18 @@ public class TimelineController : MonoBehaviour
         }
         else if (isStationaryLoaded && !isMovingLoaded)
         {
+            // move to break scene
+            LoadBreakScene();
             Debug.Log(" === Then Loading moving scene === ");
-            LoadMovingScene();
+            // LoadMovingScene();
             isMovingLoaded = true;
 
         }
         else if (!isStationaryLoaded && isMovingLoaded)
         {
+            LoadBreakScene();
             Debug.Log(" === Then Loading stationary scene === ");
-            LoadStationaryScene();
+            // LoadStationaryScene();
             isStationaryLoaded = true;
         }
         else
