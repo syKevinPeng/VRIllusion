@@ -217,8 +217,9 @@ GameObject:
   - component: {fileID: 103826310}
   - component: {fileID: 103826309}
   - component: {fileID: 103826315}
+  - component: {fileID: 103826316}
   m_Layer: 0
-  m_Name: Menu Canvas
+  m_Name: MenuCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -312,6 +313,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 31
+--- !u!114 &103826316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103826307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 379534438f1ffa94d89d074b27a9c41e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &168893614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1015,6 @@ GameObject:
   m_Component:
   - component: {fileID: 442574397}
   - component: {fileID: 442574398}
-  - component: {fileID: 442574399}
   m_Layer: 0
   m_Name: BtnInteractable
   m_TagString: Untagged
@@ -1068,25 +1080,6 @@ MonoBehaviour:
   _whenSelectingInteractorViewRemoved:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &442574399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 442574396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 379534438f1ffa94d89d074b27a9c41e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WelcomePage: {fileID: 652691016}
-  BeforeStartedPage: {fileID: 1040491324}
-  InstructionPage: {fileID: 1088801427}
-  NxtButton: {fileID: 1676848792}
-  BSPCheckBox1: {fileID: 982628364}
-  BSPCheckBox2: {fileID: 607923300}
-  BSPCheckBox3: {fileID: 232063225}
 --- !u!1 &458760245
 GameObject:
   m_ObjectHideFlags: 0
@@ -4475,7 +4468,7 @@ GameObject:
   - component: {fileID: 1676848792}
   - component: {fileID: 1676848795}
   m_Layer: 0
-  m_Name: NextBtn
+  m_Name: NextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4546,8 +4539,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 442574399}
-        m_TargetAssemblyTypeName: NextBtnController, Assembly-CSharp
+      - m_Target: {fileID: 103826316}
+        m_TargetAssemblyTypeName: WelcomeCanvasController, Assembly-CSharp
         m_MethodName: NextBtnClick
         m_Mode: 1
         m_Arguments:

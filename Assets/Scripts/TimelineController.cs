@@ -9,11 +9,13 @@ public class TimelineController : MonoBehaviour
     private float startTime;
     private int UID;
     // Start is called before the first frame update
-    private Boolean isStationaryLoaded = false;
-    private Boolean isMovingLoaded = false;
+    public static Boolean isStationaryLoaded = false;
+    public static Boolean isMovingLoaded = false;
+    private GameObject timeline;
 
     private void LoadStationaryScene()
     {
+        Scene stationaryscene = SceneManager.GetSceneByBuildIndex(1);
         SceneManager.LoadScene("IllusionStationaryScene");
 
     }
@@ -35,7 +37,10 @@ public class TimelineController : MonoBehaviour
 
     private void LoadMovingScene()
     {
+        Scene motionscene = SceneManager.GetSceneByBuildIndex(2);
         StartCoroutine(LoadAsyncScene());
+
+
     }
     private Boolean isMovingSceneLoaded()
     {
@@ -50,28 +55,29 @@ public class TimelineController : MonoBehaviour
         {
             // if both scenes are not loaded, randomly load one of them
             if (UnityEngine.Random.Range(0, 2) == 0)
+            // if (false)
             {
-                Debug.Log("Loading stationary scene");
+                Debug.Log(" === Loading stationary scene  === ");
                 LoadStationaryScene();
                 isStationaryLoaded = true;
             }
             else
             {
-                Debug.Log("Loading moving scene");
+                Debug.Log(" === Loading moving scene === ");
                 LoadMovingScene();
                 isMovingLoaded = true;
             }
         }
         else if (isStationaryLoaded && !isMovingLoaded)
         {
-            Debug.Log("Loading moving scene");
+            Debug.Log(" === Then Loading moving scene === ");
             LoadMovingScene();
             isMovingLoaded = true;
 
         }
         else if (!isStationaryLoaded && isMovingLoaded)
         {
-            Debug.Log("Loading stationary scene");
+            Debug.Log(" === Then Loading stationary scene === ");
             LoadStationaryScene();
             isStationaryLoaded = true;
         }
@@ -79,6 +85,8 @@ public class TimelineController : MonoBehaviour
         {
             Debug.Log("Expereinment is over, both scenes are loaded.");
             Debug.Log(" == Total Time: " + (Time.time - startTime) + " == ");
+            // quit the application
+            Application.Quit();
         }
 
     }
@@ -91,7 +99,9 @@ public class TimelineController : MonoBehaviour
         {
             Debug.Log(" == UID: " + UID + " == ");
         }
-
+        timeline = GameObject.Find("TimelineController");
+        // check if this object is don't destroy on load
+        DontDestroyOnLoad(this.gameObject);
 
     }
 

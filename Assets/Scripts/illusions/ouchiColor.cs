@@ -10,7 +10,6 @@ public class ouchiColor : ouchiLength
 
     public ouchiColor(float stepSize = 0.01f)
     {
-        Debug.Log("========== Ouchi Color Start ==========");
         texture = GeneratePattern();
         this.stepSize = stepSize;
     }

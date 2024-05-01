@@ -20,7 +20,6 @@ public class ouchiLength : abstractIllusionPattern
     //constructor
     public ouchiLength(float stepSize = 0.1f)
     {
-        Debug.Log("========== Ouchi Start ==========");
         texture = GeneratePattern(InitPatternHeight, InitPatternWidth);
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;

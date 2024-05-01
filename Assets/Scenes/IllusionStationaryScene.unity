@@ -466,7 +466,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1730757804}
-        m_TargetAssemblyTypeName: ConfirmButton, Assembly-CSharp
+        m_TargetAssemblyTypeName: IllusionCanvasController, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
@@ -2995,7 +2995,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1730757802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a8b034a26e6be448a9b16fe42ba59a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5343f8c38f918834397311e61ab51713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1730757805

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using UnityEngine.UI;
 // This class is used to manage the controller of your VR equipment
 
 
@@ -14,7 +15,7 @@ public class IllusionCanvasController : MonoBehaviour
     private GameObject Slider;
     private GameObject UpButton;
     private GameObject DownButton;
-    public float stepSize = 0.1f;
+    private GameObject ConfirmButton;
 
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
@@ -83,6 +84,17 @@ public class IllusionCanvasController : MonoBehaviour
         return RawImage.GetComponent<IllusionPatternLoader>().GetMaxRatio();
     }
 
+    public void OnClick()
+    {
+        Debug.Log("Confirm Button Clicked");
+        abstractIllusionPattern NextPattern = RawImage.GetComponent<IllusionPatternLoader>().GetNextPattern();
+        if (NextPattern == null)
+        {
+            Debug.Log("No More Patterns. Moving to the next scene.");
+            GameObject.Find("TimelineController").GetComponent<TimelineController>().GetNextScene();
+        }
+
+    }
 
 
 
@@ -92,6 +104,7 @@ public class IllusionCanvasController : MonoBehaviour
         UpButton = GameObject.Find("UpButton");
         DownButton = GameObject.Find("DownButton");
         Slider = GameObject.Find("Slider");
+        ConfirmButton = GameObject.Find("ConfirmButton");
         Debug.Log("Current Ratio: " + GetCurrentRatio() + " Init Ratio: " + GetInitRatio());
         // Config the slider
         Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetMaxRatio();
