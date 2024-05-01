@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Meta.WitAi.Attributes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class TimelineController : MonoBehaviour
@@ -33,6 +34,24 @@ public class TimelineController : MonoBehaviour
             }
             yield return null;
         }
+        GameObject.Find("MenuCanvas").GetComponent<WelcomeCanvasController>().SetupBreakPage();
+    }
+
+    IEnumerator AsyncLoadBreakScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WelcomeScene");
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            Debug.LogWarning("Loading progress: " + asyncLoad.progress);
+            // if (asyncLoad.progress >= 0.9f)
+            if (isMovingSceneLoaded())
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+
     }
 
     private void LoadMovingScene()
@@ -49,12 +68,17 @@ public class TimelineController : MonoBehaviour
         return camera.transform.hasChanged;
 
     }
-
+    private void ListAllObj()
+    {
+        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        foreach (GameObject obj in allObjects)
+        {
+            Debug.Log(obj.name);
+        }
+    }
     private void LoadBreakScene()
     {
         StartCoroutine(LoadAsyncScene("WelcomeScene"));
-        GameObject.Find("MenuCanvas").GetComponent<WelcomeCanvasController>().SetupBreakPage();
-
 
     }
     public void GetNextScene()
