@@ -12,6 +12,7 @@ public class TimelineController : MonoBehaviour
     // Start is called before the first frame update
     public static Boolean isStationaryLoaded = false;
     public static Boolean isMovingLoaded = false;
+    public static Boolean isBreaked = false;
     private GameObject timeline;
 
     private void LoadStationaryScene()
@@ -34,7 +35,7 @@ public class TimelineController : MonoBehaviour
             }
             yield return null;
         }
-        GameObject.Find("MenuCanvas").GetComponent<WelcomeCanvasController>().SetupBreakPage();
+
     }
 
     IEnumerator AsyncLoadBreakScene()
@@ -51,6 +52,25 @@ public class TimelineController : MonoBehaviour
             }
             yield return null;
         }
+        GameObject.Find("MenuCanvas").GetComponent<WelcomeCanvasController>().SetupBreakPage();
+
+    }
+
+    IEnumerator AsyncLoadThankyouScene()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("WelcomeScene");
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            Debug.LogWarning("Loading progress: " + asyncLoad.progress);
+            // if (asyncLoad.progress >= 0.9f)
+            if (isMovingSceneLoaded())
+            {
+                asyncLoad.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+        GameObject.Find("MenuCanvas").GetComponent<WelcomeCanvasController>().SetupThankyouPage();
 
     }
 
@@ -68,18 +88,16 @@ public class TimelineController : MonoBehaviour
         return camera.transform.hasChanged;
 
     }
-    private void ListAllObj()
-    {
-        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-        foreach (GameObject obj in allObjects)
-        {
-            Debug.Log(obj.name);
-        }
-    }
+
     private void LoadBreakScene()
     {
-        StartCoroutine(LoadAsyncScene("WelcomeScene"));
+        StartCoroutine(AsyncLoadBreakScene());
 
+    }
+
+    private void LoadThankyouScene()
+    {
+        StartCoroutine(AsyncLoadThankyouScene());
     }
     public void GetNextScene()
     {
@@ -100,28 +118,32 @@ public class TimelineController : MonoBehaviour
                 isMovingLoaded = true;
             }
         }
+        else if (!isBreaked)
+        {
+            // if one of the scenes is loaded, load the break scene
+            LoadBreakScene();
+            isBreaked = true;
+        }
         else if (isStationaryLoaded && !isMovingLoaded)
         {
-            // move to break scene
-            LoadBreakScene();
             Debug.Log(" === Then Loading moving scene === ");
-            // LoadMovingScene();
+            LoadMovingScene();
             isMovingLoaded = true;
 
         }
         else if (!isStationaryLoaded && isMovingLoaded)
         {
-            LoadBreakScene();
             Debug.Log(" === Then Loading stationary scene === ");
-            // LoadStationaryScene();
+            LoadStationaryScene();
             isStationaryLoaded = true;
+        }
+        else if (isStationaryLoaded && isMovingLoaded && isBreaked)
+        {
+            LoadThankyouScene();
         }
         else
         {
-            Debug.Log("Expereinment is over, both scenes are loaded.");
-            Debug.Log(" == Total Time: " + (Time.time - startTime) + " == ");
-            // quit the application
-            Application.Quit();
+            Debug.LogError(" === Something went wrong === ");
         }
 
     }

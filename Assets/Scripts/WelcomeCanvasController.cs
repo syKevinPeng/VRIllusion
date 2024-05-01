@@ -24,7 +24,7 @@ public class WelcomeCanvasController : MonoBehaviour
     private Toggle BSPCheckBox3;
     private GameObject TimelineController;
     private Boolean startTimer = false;
-    private float timeRemaining = 60; // seconds
+    private float timeRemaining = 10; // seconds
 
     private GameObject TimeText;
     public void NextBtnClick()
@@ -47,8 +47,11 @@ public class WelcomeCanvasController : MonoBehaviour
         {
             TimelineController.GetComponent<TimelineController>().GetNextScene();
         }
+        else if (currentPage == BreakPage)
+        {
+            TimelineController.GetComponent<TimelineController>().GetNextScene();
+        }
         NxtButton.GetComponent<Button>().interactable = false; // avoid double click
-        // NxtButton.interactable = false; // avoid double click
     }
 
     public void WhenHover()
@@ -66,9 +69,16 @@ public class WelcomeCanvasController : MonoBehaviour
 
     void DisplayTime(float timeToDisplay)
     {
-        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        TimeText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        if (timeToDisplay <= 0)
+        {
+            TimeText.GetComponent<TextMeshProUGUI>().text = "Break Completed";
+        }
+        else
+        {
+            float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+            float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+            TimeText.GetComponent<TextMeshProUGUI>().text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
     }
 
     public void SetupBreakPage()
@@ -77,6 +87,14 @@ public class WelcomeCanvasController : MonoBehaviour
         BreakPage.SetActive(true);
         currentPage = BreakPage;
         startTimer = true;
+    }
+
+    public void SetupThankyouPage()
+    {
+        currentPage.SetActive(false);
+        ThankyouPage.SetActive(true);
+        currentPage = ThankyouPage;
+        NxtButton.SetActive(false);
     }
 
     void Start()
@@ -118,9 +136,6 @@ public class WelcomeCanvasController : MonoBehaviour
             Debug.LogError("<color=red>CheckBox1 is not found</color>");
         }
 
-
-
-
     }
 
     // Update is called once per frame
@@ -131,10 +146,12 @@ public class WelcomeCanvasController : MonoBehaviour
         // deal with timer
         if (startTimer)
         {
+            NxtButton.GetComponent<Button>().interactable = false;
             timeRemaining -= Time.deltaTime;
             if (timeRemaining < 0)
             {
                 startTimer = false;
+                NxtButton.GetComponent<Button>().interactable = true;
                 // NextBtnClick();
                 Debug.LogError("Time is up");
 
