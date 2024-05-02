@@ -20,11 +20,11 @@ public class OuchiIllusion : AbstractIllusionPattern
 
     // Constructor
     public wheelLength(float stepSize = 0.1f)
-    {
-        texture = GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+    {   
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
         this.stepSize = stepSize;
+        texture = GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
     }
 
     public override Texture2D GeneratePattern()
