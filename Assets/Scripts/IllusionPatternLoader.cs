@@ -17,6 +17,8 @@ public class IllusionPatternLoader : MonoBehaviour
 
         abstractIllusionPattern ouchiLength = new ouchiLength(stepSize: 0.1f);
         abstractIllusionPattern ouchiColor = new ouchiColor(stepSize: 0.04f);
+        abstractIllusionPattern wheelLength = new wheelLength(stepSize: 0.01f);
+
 
         allPatterns.Add(ouchiLength);
         allPatterns.Add(ouchiColor);

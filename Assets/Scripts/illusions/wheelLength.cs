@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WheelIllusion : AbstractIllusionPattern
+public class wheelLength : abstractIllusionPattern
 {
     public int width = 2048;
     public int height = 2048;
@@ -20,11 +20,9 @@ public class WheelIllusion : AbstractIllusionPattern
 
     // Constructor
     public wheelLength(float stepSize = 0.1f)
-    {   
-        CurrentPatternHeight = InitPatternHeight;
-        CurrentPatternWidth = InitPatternWidth;
+    {
         this.stepSize = stepSize;
-        texture = GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        texture = GeneratePattern();
     }
 
     public override Texture2D GeneratePattern()
@@ -49,7 +47,7 @@ public class WheelIllusion : AbstractIllusionPattern
         {
             float angle = 2 * Mathf.PI * i / numSquares;
             Vector2 squareCenter = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * adjustedRadius;
-            DrawRotatedSquare(texture, squareCenter, CurrentPatternHeight, angle + Mathf.PI / 2, color.black, color.white); // Use CurrentPatternHeight for square size
+            DrawRotatedSquare(texture, squareCenter, CurrentPatternHeight, angle + Mathf.PI / 2, Color.black, Color.white); // Use CurrentPatternHeight for square size
         }
 
         // Draw the dot at the center
@@ -141,21 +139,14 @@ public class WheelIllusion : AbstractIllusionPattern
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() + stepSize);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        GeneratePattern();
     }
     public override void DecreasePatternRatio()
     {
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() - stepSize);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
-    }
-
-    void ResetPattern()
-    {
-        CurrentPatternHeight = InitPatternHeight;
-        CurrentPatternWidth = InitPatternWidth;
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        GeneratePattern();
     }
 
     public override float GetMinRatio()
