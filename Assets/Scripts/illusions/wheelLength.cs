@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class OuchiIllusion : AbstractIllusionPattern
+public class WheelIllusion : AbstractIllusionPattern
 {
     public int width = 2048;
     public int height = 2048;
