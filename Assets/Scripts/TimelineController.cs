@@ -167,4 +167,12 @@ public class TimelineController : MonoBehaviour
     {
 
     }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            Debug.LogError("Applcation is paused");
+        }
+    }
 }
