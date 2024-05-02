@@ -49,7 +49,7 @@ public class WheelIllusion : AbstractIllusionPattern
         {
             float angle = 2 * Mathf.PI * i / numSquares;
             Vector2 squareCenter = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * adjustedRadius;
-            DrawRotatedSquare(texture, squareCenter, CurrentPatternHeight, angle + Mathf.PI / 2); // Use CurrentPatternHeight for square size
+            DrawRotatedSquare(texture, squareCenter, CurrentPatternHeight, angle + Mathf.PI / 2, color.black, color.white); // Use CurrentPatternHeight for square size
         }
 
         // Draw the dot at the center
@@ -60,18 +60,24 @@ public class WheelIllusion : AbstractIllusionPattern
     }
 
 
-    void DrawRotatedSquare(Texture2D texture, Vector2 center, float size, float angle)
+    void DrawRotatedSquare(Texture2D texture, Vector2 center, float size, float angle, Color color1, Color color2)
     {
         Vector2 halfSize = Vector2.one * (size / 2);
         Vector2[] corners = new Vector2[4];
+        
+        // Define each corner of the square relative to the center
         corners[0] = RotatePoint(center, center - halfSize, angle);
         corners[1] = RotatePoint(center, new Vector2(center.x + halfSize.x, center.y - halfSize.y), angle);
         corners[2] = RotatePoint(center, center + halfSize, angle);
         corners[3] = RotatePoint(center, new Vector2(center.x - halfSize.x, center.y + halfSize.y), angle);
 
+        // Colors for the lines, alternating between two provided colors
+        Color[] lineColors = { color1, color2, color1, color2 };
+
+        // Draw lines between each corner point
         for (int i = 0; i < 4; i++)
         {
-            DrawLine(texture, corners[i], corners[(i + 1) % 4], Color.white);
+            DrawLine(texture, corners[i], corners[(i + 1) % 4], lineColors[i]);
         }
     }
 
@@ -82,21 +88,6 @@ public class WheelIllusion : AbstractIllusionPattern
         point -= pivot;
         Vector2 rotated = new Vector2(point.x * cos - point.y * sin, point.x * sin + point.y * cos);
         return rotated + pivot;
-    }
-
-    void DrawDot(Texture2D texture, Vector2 position, int diameter, Color color)
-    {
-        int radius = diameter / 2;
-        for (int x = -radius; x <= radius; x++)
-        {
-            for (int y = -radius; y <= radius; y++)
-            {
-                if (x * x + y * y <= radius * radius)
-                {
-                    texture.SetPixel((int)(position.x + x), (int)(position.y + y), color);
-                }
-            }
-        }
     }
 
     void DrawLine(Texture2D texture, Vector2 start, Vector2 end, Color color)
@@ -122,6 +113,7 @@ public class WheelIllusion : AbstractIllusionPattern
             if (e2 < dy) { err += dx; y0 += sy; }
         }
     }
+
 
     public override float GetCurrentRatio()
     {
