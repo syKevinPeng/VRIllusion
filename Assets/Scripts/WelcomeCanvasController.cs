@@ -15,6 +15,7 @@ public class WelcomeCanvasController : MonoBehaviour
     private GameObject WelcomePage;
     private GameObject BeforeStartedPage;
     private GameObject InstructionPage;
+    private GameObject AssignmentPage;
     private GameObject BreakPage;
     private GameObject ThankyouPage;
     private GameObject currentPage;
@@ -25,6 +26,7 @@ public class WelcomeCanvasController : MonoBehaviour
     private GameObject TimelineController;
     private Boolean startTimer = false;
     private float timeRemaining = 10; // seconds
+    private string nextScene;
 
     private GameObject TimeText;
     public void NextBtnClick()
@@ -45,11 +47,37 @@ public class WelcomeCanvasController : MonoBehaviour
         }
         else if (currentPage == InstructionPage)
         {
-            TimelineController.GetComponent<TimelineController>().GetNextScene();
+            currentPage.SetActive(false);
+            AssignmentPage.SetActive(true);
+            currentPage = AssignmentPage;
+            if (UnityEngine.Random.Range(0, 2) == 0)
+            {
+                nextScene = "stationary";
+            }
+            else
+            {
+                nextScene = "moving";
+            }
+            UpdateAssignmentPage(nextScene);
+        }
+        else if (currentPage == AssignmentPage)
+        {
+            TimelineController.GetComponent<TimelineController>().GetNextScene(nextScene);
         }
         else if (currentPage == BreakPage)
         {
-            TimelineController.GetComponent<TimelineController>().GetNextScene();
+            if (nextScene == "stationary") // switch to the other scene
+            {
+                nextScene = "moving";
+            }
+            else
+            {
+                nextScene = "stationary";
+            }
+            currentPage.SetActive(false);
+            AssignmentPage.SetActive(true);
+            currentPage = AssignmentPage;
+            UpdateAssignmentPage(nextScene);
         }
         NxtButton.GetComponent<Button>().interactable = false; // avoid double click
     }
@@ -67,6 +95,31 @@ public class WelcomeCanvasController : MonoBehaviour
         NxtButton.GetComponent<Image>().color = normalColor;
     }
 
+    private void UpdateAssignmentPage(string assignment)
+    {
+        if (assignment == "stationary")
+        {
+            AssignmentPage.transform.Find("assignmentText").GetComponent<TextMeshProUGUI>().text =
+            "Setup 1: \n" +
+            "You will experience a series of visual Illusions while remaining stationary. \n" +
+            "Please adjust the illusion to the point where it is no longer perceivable.";
+        }
+        else if (assignment == "moving")
+        {
+            AssignmentPage.transform.Find("assignmentText").GetComponent<TextMeshProUGUI>().text =
+
+            "Setup 2: \n" +
+            "You will experience a series of visual Illusions while walking at a comfortable pace on the treadmill. . \n" +
+            "Please adjust the illusion to the point where it is no longer perceivable." +
+            "Now, please step up on the treadmill and start walking at a comfortable pace. \n";
+
+        }
+        else
+        {
+            Debug.LogError("Invalid assignment");
+        }
+
+    }
     void DisplayTime(float timeToDisplay)
     {
         if (timeToDisplay <= 0)
@@ -103,6 +156,7 @@ public class WelcomeCanvasController : MonoBehaviour
         WelcomePage = MenuCanvas.transform.Find("WelcomePage").gameObject;
         BeforeStartedPage = MenuCanvas.transform.Find("BeforeStartedPage").gameObject;
         InstructionPage = MenuCanvas.transform.Find("InstructionPage").gameObject;
+        AssignmentPage = MenuCanvas.transform.Find("AssignmentPage").gameObject;
         BreakPage = MenuCanvas.transform.Find("BreakPage").gameObject;
         ThankyouPage = MenuCanvas.transform.Find("ThankyouPage").gameObject;
 
@@ -120,6 +174,7 @@ public class WelcomeCanvasController : MonoBehaviour
         WelcomePage.SetActive(true);
         BeforeStartedPage.SetActive(false);
         InstructionPage.SetActive(false);
+        AssignmentPage.SetActive(false);
         BreakPage.SetActive(false);
         ThankyouPage.SetActive(false);
 
@@ -152,8 +207,6 @@ public class WelcomeCanvasController : MonoBehaviour
             {
                 startTimer = false;
                 NxtButton.GetComponent<Button>().interactable = true;
-                // NextBtnClick();
-                Debug.LogError("Time is up");
 
             }
         }

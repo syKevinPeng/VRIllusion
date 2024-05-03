@@ -99,23 +99,27 @@ public class TimelineController : MonoBehaviour
     {
         StartCoroutine(AsyncLoadThankyouScene());
     }
-    public void GetNextScene()
+    public void GetNextScene(string sceneName = null)
     {
         if (!isStationaryLoaded && !isMovingLoaded)
         {
             // if both scenes are not loaded, randomly load one of them
-            if (UnityEngine.Random.Range(0, 2) == 0)
+            if (sceneName == "stationary")
             // if (false)
             {
                 Debug.Log(" === Loading stationary scene  === ");
                 LoadStationaryScene();
                 isStationaryLoaded = true;
             }
-            else
+            else if (sceneName == "moving")
             {
                 Debug.Log(" === Loading moving scene === ");
                 LoadMovingScene();
                 isMovingLoaded = true;
+            }
+            else
+            {
+                Debug.LogError(" === Invalid scene name === ");
             }
         }
         else if (!isBreaked)
