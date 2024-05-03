@@ -54,12 +54,12 @@ public class IllusionCanvasController : MonoBehaviour
     }
     public void HideCanvas()
     {
-        gameObject.SetActive(false);
+        // gameObject.SetActive(false);
     }
 
     public void ShowCanvas()
     {
-        gameObject.SetActive(true);
+        gameObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 3;
     }
 
     public float GetCurrentRatio()
@@ -82,6 +82,15 @@ public class IllusionCanvasController : MonoBehaviour
     private float GetMaxRatio()
     {
         return RawImage.GetComponent<IllusionPatternLoader>().GetMaxRatio();
+    }
+
+    private void UpdateCanvasPosition()
+    {
+        Vector3 newPosition = Camera.main.transform.position;
+        float distance = 3.5f; // Adjust the distance as needed
+        newPosition.z += distance;
+
+        gameObject.transform.position = newPosition;
     }
 
     public void OnClick()
@@ -111,11 +120,15 @@ public class IllusionCanvasController : MonoBehaviour
         Slider.GetComponent<UnityEngine.UI.Slider>().minValue = GetMinRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
+
+        // intialize canvas position
+        UpdateCanvasPosition();
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateCanvasPosition();
         if (RawImage != null)
         {
             GetIncreaseButtonPressed();

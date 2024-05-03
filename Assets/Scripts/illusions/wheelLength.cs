@@ -51,7 +51,7 @@ public class wheelLength : abstractIllusionPattern
         }
 
         // Draw the dot at the center
-        DrawDot(texture, center, dotDiameter, dotColor);
+        // DrawDot(texture, center, dotDiameter, dotColor);
 
         texture.Apply();
         return texture;
@@ -120,7 +120,9 @@ public class wheelLength : abstractIllusionPattern
 
     public override float GetInitRatio()
     {
-        return ((float)InitPatternWidth) / InitPatternHeight;
+        Debug.Log("FIX THIS");
+        return 0.0f;
+        // return ((float)InitPatternWidth) / InitPatternHeight;
     }
 
     void SetPatternRatio(float ratio)
