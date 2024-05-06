@@ -19,6 +19,7 @@ public class TimelineController : MonoBehaviour
     {
         Scene stationaryscene = SceneManager.GetSceneByBuildIndex(1);
         SceneManager.LoadScene("IllusionStationaryScene");
+        PlayerPrefs.SetString("CurrentScene", "Stationary");
 
     }
     IEnumerator LoadAsyncScene(string sceneName = "IllusionInMotionScene")
@@ -78,8 +79,7 @@ public class TimelineController : MonoBehaviour
     {
         Scene motionscene = SceneManager.GetSceneByBuildIndex(2);
         StartCoroutine(LoadAsyncScene());
-
-
+        PlayerPrefs.SetString("CurrentScene", "Moving");
     }
     private Boolean isMovingSceneLoaded()
     {
@@ -160,6 +160,7 @@ public class TimelineController : MonoBehaviour
         {
             Debug.Log(" == UID: " + UID + " == ");
         }
+        PlayerPrefs.SetInt("UID", UID);
         timeline = GameObject.Find("TimelineController");
         // check if this object is don't destroy on load
         DontDestroyOnLoad(this.gameObject);
@@ -177,6 +178,7 @@ public class TimelineController : MonoBehaviour
         if (pauseStatus)
         {
             Debug.LogError("Applcation is paused");
+            PlayerPrefs.Save();
         }
     }
 }

@@ -68,6 +68,12 @@ public class IllusionPatternLoader : MonoBehaviour
         return currentPattern.GetMaxRatio();
     }
 
+    public string GetPatternName()
+    {
+        string currentScene = PlayerPrefs.GetString("CurrentScene");
+        return currentScene + " " + currentPattern.ToString();
+    }
+
 
     // Update is called once per frame
     void Update()

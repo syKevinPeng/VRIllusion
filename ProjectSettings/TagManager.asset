@@ -13,12 +13,12 @@ TagManager:
   - TeleportArea
   - Water
   - UI
+  - HiddenMesh
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - Character
+  - MirroredCharacter
   - 
   - 
   - 

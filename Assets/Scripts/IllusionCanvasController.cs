@@ -95,7 +95,9 @@ public class IllusionCanvasController : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log("Confirm Button Clicked");
+        float illusionThreshold = GetCurrentRatio();
+        string patternName = RawImage.GetComponent<IllusionPatternLoader>().GetPatternName();
+        PlayerPrefs.SetFloat(patternName, illusionThreshold);
         abstractIllusionPattern NextPattern = RawImage.GetComponent<IllusionPatternLoader>().GetNextPattern();
         if (NextPattern == null)
         {
