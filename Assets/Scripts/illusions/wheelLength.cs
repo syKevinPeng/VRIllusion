@@ -9,16 +9,17 @@ public class wheelLength : abstractIllusionPattern
 {
     public int width = 1028;
     public int height = 1028;
-    public int InitPatternHeight = 512;
-    public int InitPatternWidth = 512;
-    public int numSquares = 30;
-    public float radius = 500;
+    public int InitPatternHeight = 680;
+    public int InitPatternWidth = 680;
+    public int numSquares = 25;
+    public float radius = 600;
     public float squareSize = 20;
     public int dotDiameter = 8;
     public Color dotColor = Color.black;
     private int CurrentPatternWidth;
     private int CurrentPatternHeight;
     private float stepSize = 0.1f;
+    private float shiftSize = 1.0f;
 
     // Constructor
     public wheelLength(float stepSize = 0.1f)
@@ -26,20 +27,22 @@ public class wheelLength : abstractIllusionPattern
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
         this.stepSize = stepSize;
-        texture = GeneratePattern(CurrentPatternWidth, CurrentPatternHeight);
+        texture = GeneratePattern(CurrentPatternWidth, CurrentPatternHeight, shiftSize);
     }
 
     public override Texture2D GeneratePattern()
     {
-        texture = GeneratePattern(width, height);
+        texture = GeneratePattern(width, height, shiftSize);
         return texture;
     }
 
-    public Texture2D GeneratePattern(int width, int height)
+    public Texture2D GeneratePattern(int width, int height, float shiftSizes)
     {
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
         Color backgroundColor = Color.grey;
-
+        float shift = shiftSizes;
+        // float shift = 3.1f;
+        // float shift = 10.0f;
         // Fill background
         for (int i = 0; i < width; i++)
         {
@@ -59,7 +62,8 @@ public class wheelLength : abstractIllusionPattern
         {
             float angle = 2 * Mathf.PI * i / numSquares;
             Vector2 outerSquareCenter = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * adjustedOuterRadius;
-            DrawRotatedSquare(texture, outerSquareCenter, squareSize, angle + Mathf.PI / 2, Color.black, Color.white);
+            // DrawRotatedSquare(texture, outerSquareCenter, squareSize, angle + Mathf.PI / 2, Color.black, Color.white);
+            DrawRotatedShape(texture, outerSquareCenter, squareSize, angle + Mathf.PI / 2, shift, Color.black, Color.white);
         }
 
         // Draw inner layer of rotated squares
@@ -67,7 +71,8 @@ public class wheelLength : abstractIllusionPattern
         {
             float angle = 2 * Mathf.PI * i / numSquares;
             Vector2 innerSquareCenter = center + new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * adjustedInnerRadius;
-            DrawRotatedSquare(texture, innerSquareCenter, innerSquareSize, angle + Mathf.PI / 2, Color.black, Color.white);
+            // DrawRotatedSquare(texture, innerSquareCenter, innerSquareSize, angle + Mathf.PI / 2, Color.black, Color.white);
+            DrawRotatedShape(texture, innerSquareCenter, innerSquareSize, angle + Mathf.PI / 2, shift, Color.black, Color.white);
         }
 
         // Draw the dot at the center
@@ -76,8 +81,6 @@ public class wheelLength : abstractIllusionPattern
         texture.Apply(); // Apply all changes to the texture
         return texture;
     }
-
-
 
 
     void DrawDot(Texture2D texture, Vector2 position, int diameter, Color color)
@@ -119,41 +122,38 @@ public class wheelLength : abstractIllusionPattern
         }
     }
 
-
-
-    void DrawSquareMesh(Vector2 center, float size, float angle)
+    void DrawRotatedShape(Texture2D texture, Vector2 center, float size, float angle, float topShift, Color color1, Color color2)
     {
-        GameObject square = new GameObject("Rotated Square");
-        MeshFilter meshFilter = square.AddComponent<MeshFilter>();
-        MeshRenderer meshRenderer = square.AddComponent<MeshRenderer>();
-        Mesh mesh = new Mesh();
+        Vector2 halfSize = new Vector2(size / 2, size / 2);
+        Vector2[] corners = new Vector2[4];
+        
+        // Define the bottom corners of the square relative to the center
+        corners[0] = new Vector2(center.x - halfSize.x, center.y - halfSize.y);  // Bottom left
+        corners[3] = new Vector2(center.x + halfSize.x, center.y - halfSize.y); // Bottom right
 
-        Vector3[] vertices = new Vector3[4];
-        int[] triangles = { 0, 1, 2, 0, 2, 3 };  // Two triangles forming a square
+        // Adjust the top corners to horizontally shift the top line to the right to create a parallelogram
+        corners[1] = new Vector2(center.x - halfSize.x + topShift, center.y + halfSize.y); // Top left
+        corners[2] = new Vector2(center.x + halfSize.x + topShift, center.y + halfSize.y); // Top right
 
-        // Calculate rotated vertices
-        float halfSize = size / 2;
-        Vector2[] corners = new Vector2[]
-        {
-            new Vector2(-halfSize, -halfSize),
-            new Vector2(halfSize, -halfSize),
-            new Vector2(halfSize, halfSize),
-            new Vector2(-halfSize, halfSize)
-        };
-
+        // Rotate corners around the center after the shift
         for (int i = 0; i < 4; i++)
         {
             corners[i] = RotatePoint(center, corners[i], angle);
-            vertices[i] = new Vector3(corners[i].x, corners[i].y, 0);
         }
 
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.RecalculateNormals();
+        // Colors for the lines, adjacent same color
+        Color[] lineColors = { color2, color2, color1, color1 };
 
-        meshFilter.mesh = mesh;
-        meshRenderer.material = new Material(Shader.Find("Standard"));
+        // Draw lines between each corner point
+        for (int i = 0; i < 4; i++)
+        {
+            DrawLine(texture, corners[i], corners[(i + 1) % 4], lineColors[i]);
+        }
     }
+
+
+
+
 
     Vector2 RotatePoint(Vector2 pivot, Vector2 point, float angle)
     {
@@ -202,27 +202,28 @@ public class wheelLength : abstractIllusionPattern
     }
 
 
-
-
     public override float GetCurrentRatio()
     {
-        return ((float)CurrentPatternWidth) / CurrentPatternHeight;
+        // return ((float)CurrentPatternWidth) / CurrentPatternHeight;
+        return (float)shiftSize;
     }
 
     public override float GetInitRatio()
     {
-        return ((float)InitPatternWidth) / InitPatternHeight;
+        // return ((float)InitPatternWidth) / InitPatternHeight;
+        return (float)shiftSize;
     }
 
     void SetPatternRatio(float ratio)
     {
-        float adjustedWidth = CurrentPatternHeight * ratio;
-        if (adjustedWidth < CurrentPatternWidth)
-            CurrentPatternWidth = Math.Min(CurrentPatternWidth - 1, (int)adjustedWidth);
-        else if (adjustedWidth > CurrentPatternWidth)
-            CurrentPatternWidth = Math.Max(CurrentPatternWidth + 1, (int)adjustedWidth);
-        else
-            Debug.Log("No change in pattern width! Really? Double check ratio!");
+        // float adjustedWidth = CurrentPatternHeight * ratio;
+        // if (adjustedWidth < CurrentPatternWidth)
+        //     CurrentPatternWidth = Math.Min(CurrentPatternWidth - 1, (int)adjustedWidth);
+        // else if (adjustedWidth > CurrentPatternWidth)
+        //     CurrentPatternWidth = Math.Max(CurrentPatternWidth + 1, (int)adjustedWidth);
+        // else
+        //     Debug.Log("No change in pattern width! Really? Double check ratio!");
+        shiftSize = (int)ratio;
     }
 
     public override void IncreasePatternRatio()
@@ -230,27 +231,28 @@ public class wheelLength : abstractIllusionPattern
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() + stepSize);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth, shiftSize);
     }
     public override void DecreasePatternRatio()
     {
         // Debug.Log("current ratio: " + GetCurrentRatio() + " step: " + step);
         SetPatternRatio(GetCurrentRatio() - stepSize);
         // Debug.Log("after set pattern, current ratio: " + GetCurrentRatio() + " step: " + step);
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth, shiftSize);
     }
 
     void ResetPattern()
     {
         CurrentPatternHeight = InitPatternHeight;
         CurrentPatternWidth = InitPatternWidth;
-        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth);
+        GeneratePattern(CurrentPatternHeight, CurrentPatternWidth, 1.0f);
     }
 
     public override float GetMinRatio()
     {
         return 0.1f;
     }
+  
     public override float GetMaxRatio()
     {
         return GetInitRatio() * 1.2f;
