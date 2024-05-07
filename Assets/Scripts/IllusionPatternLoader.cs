@@ -10,21 +10,24 @@ public class IllusionPatternLoader : MonoBehaviour
     public List<abstractIllusionPattern> allPatterns = new List<abstractIllusionPattern>();
     public abstractIllusionPattern currentPattern;
     private GameObject RawImage;
+    private GameObject TimelineController;
 
     void Start()
     {
         RawImage = GameObject.Find("IllusionCanvas").transform.Find("Canvas").transform.Find("RawImage").gameObject;
+        TimelineController = GameObject.Find("TimelineController");
 
         abstractIllusionPattern ouchiLength = new ouchiLength(stepSize: 0.1f);
         abstractIllusionPattern ouchiColor = new ouchiColor(stepSize: 0.04f);
         abstractIllusionPattern wheelLength = new wheelLength(stepSize: 0.01f);
+        abstractIllusionPattern wheel1Length = new wheel1Length(stepSize: 0.1f);
 
 
-        // allPatterns.Add(ouchiLength);
-        // allPatterns.Add(ouchiColor);
-        allPatterns.Add(wheelLength);
+        allPatterns.Add(ouchiLength);
+        allPatterns.Add(ouchiColor);
+        // allPatterns.Add(wheel1Length);
 
-        currentPattern = wheelLength;
+        currentPattern = ouchiLength;
         Debug.Log(" === Loading " + currentPattern + "  === ");
     }
 
@@ -71,7 +74,8 @@ public class IllusionPatternLoader : MonoBehaviour
 
     public string GetPatternName()
     {
-        string currentScene = PlayerPrefs.GetString("CurrentScene");
+        DataSaver dataSaver = TimelineController.GetComponent<TimelineController>().GetDataSaver();
+        string currentScene = dataSaver.getCurrentScene();
         return currentScene + " " + currentPattern.ToString();
     }
 

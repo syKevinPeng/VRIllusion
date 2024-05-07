@@ -14,12 +14,13 @@ public class TimelineController : MonoBehaviour
     public static Boolean isMovingLoaded = false;
     public static Boolean isBreaked = false;
     private GameObject timeline;
+    DataSaver dataSaver = new DataSaver();
 
     private void LoadStationaryScene()
     {
         Scene stationaryscene = SceneManager.GetSceneByBuildIndex(1);
         SceneManager.LoadScene("IllusionStationaryScene");
-        PlayerPrefs.SetString("CurrentScene", "Stationary");
+        dataSaver.setCurrentScene("Stationary");
 
     }
     IEnumerator LoadAsyncScene(string sceneName = "IllusionInMotionScene")
@@ -79,7 +80,7 @@ public class TimelineController : MonoBehaviour
     {
         Scene motionscene = SceneManager.GetSceneByBuildIndex(2);
         StartCoroutine(LoadAsyncScene());
-        PlayerPrefs.SetString("CurrentScene", "Moving");
+        dataSaver.setCurrentScene("Moving");
     }
     private Boolean isMovingSceneLoaded()
     {
@@ -98,6 +99,8 @@ public class TimelineController : MonoBehaviour
     private void LoadThankyouScene()
     {
         StartCoroutine(AsyncLoadThankyouScene());
+        dataSaver.SaveData();
+        // dataSaver.printAllData();
     }
     public void GetNextScene(string sceneName = null)
     {
@@ -151,6 +154,12 @@ public class TimelineController : MonoBehaviour
         }
 
     }
+
+    public DataSaver GetDataSaver()
+    {
+        // get the data saver object
+        return dataSaver;
+    }
     void Start()
     {
         startTime = Time.time;
@@ -160,7 +169,8 @@ public class TimelineController : MonoBehaviour
         {
             Debug.Log(" == UID: " + UID + " == ");
         }
-        PlayerPrefs.SetInt("UID", UID);
+        dataSaver.setUID(UID.ToString());
+        // dataSaver.printAllData();
         timeline = GameObject.Find("TimelineController");
         // check if this object is don't destroy on load
         DontDestroyOnLoad(this.gameObject);
@@ -178,7 +188,7 @@ public class TimelineController : MonoBehaviour
         if (pauseStatus)
         {
             Debug.LogError("Applcation is paused");
-            PlayerPrefs.Save();
+            dataSaver.SaveData();
         }
     }
 }

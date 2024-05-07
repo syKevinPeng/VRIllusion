@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 using UnityEngine.UI;
+using Meta.XR.MRUtilityKit;
 // This class is used to manage the controller of your VR equipment
 
 
@@ -16,6 +17,8 @@ public class IllusionCanvasController : MonoBehaviour
     private GameObject UpButton;
     private GameObject DownButton;
     private GameObject ConfirmButton;
+    private GameObject TimelineController;
+    private DataSaver dataSaver;
 
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
@@ -87,7 +90,7 @@ public class IllusionCanvasController : MonoBehaviour
     private void UpdateCanvasPosition()
     {
         Vector3 newPosition = Camera.main.transform.position;
-        float distance = 3.5f; // Adjust the distance as needed
+        float distance = 2f; // Adjust the distance as needed
         newPosition.z += distance;
 
         gameObject.transform.position = newPosition;
@@ -97,7 +100,7 @@ public class IllusionCanvasController : MonoBehaviour
     {
         float illusionThreshold = GetCurrentRatio();
         string patternName = RawImage.GetComponent<IllusionPatternLoader>().GetPatternName();
-        PlayerPrefs.SetFloat(patternName, illusionThreshold);
+        dataSaver.setIllusionScore(patternName, illusionThreshold);
         abstractIllusionPattern NextPattern = RawImage.GetComponent<IllusionPatternLoader>().GetNextPattern();
         if (NextPattern == null)
         {
@@ -116,12 +119,15 @@ public class IllusionCanvasController : MonoBehaviour
         DownButton = GameObject.Find("DownButton");
         Slider = GameObject.Find("Slider");
         ConfirmButton = GameObject.Find("ConfirmButton");
+        TimelineController = GameObject.Find("TimelineController");
         Debug.Log("Current Ratio: " + GetCurrentRatio() + " Init Ratio: " + GetInitRatio());
         // Config the slider
         Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetMaxRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().minValue = GetMinRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
         Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
+
+        dataSaver = TimelineController.GetComponent<TimelineController>().GetDataSaver();
 
         // intialize canvas position
         UpdateCanvasPosition();
