@@ -20,10 +20,11 @@ public class IllusionPatternLoader : MonoBehaviour
         abstractIllusionPattern wheelLength = new wheelLength(stepSize: 0.01f);
 
 
-        allPatterns.Add(ouchiLength);
-        allPatterns.Add(ouchiColor);
+        // allPatterns.Add(ouchiLength);
+        // allPatterns.Add(ouchiColor);
+        allPatterns.Add(wheelLength);
 
-        currentPattern = ouchiLength;
+        currentPattern = wheelLength;
         Debug.Log(" === Loading " + currentPattern + "  === ");
     }
 
