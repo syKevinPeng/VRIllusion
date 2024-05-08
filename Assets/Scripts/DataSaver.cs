@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 public class DataSaver
 {
     private string UID;
@@ -42,13 +43,13 @@ public class DataSaver
     public void SaveData()
     {
         // Save the data to the file
-        string path = Application.persistentDataPath + "/data.txt";
-        string recordedData = this.ToString();
+        string path = Application.persistentDataPath + "/" + (this.UID) + "_data.txt";
+        string recordedData = this.GetRecord();
         System.IO.File.AppendAllText(path, recordedData);
         Debug.LogWarning("Data Saved to " + path);
     }
 
-    public string ToJson()
+    public string GetRecord()
     {
         string illusionScoreString = "";
         foreach (KeyValuePair<string, float> entry in illusionScore)

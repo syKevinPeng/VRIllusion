@@ -26,7 +26,7 @@ public class WelcomeCanvasController : MonoBehaviour
     private GameObject TimelineController;
     private Boolean startTimer = false;
     private float timeRemaining = 10; // seconds
-    private string nextScene;
+    private static string nextScene;
 
     private GameObject TimeText;
     public void NextBtnClick()
