@@ -29,6 +29,7 @@ public class IllusionCanvasController : MonoBehaviour
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<IllusionPatternLoader>().IncreasePatternRatio();
             UpButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/uparrow_blue");
+            Debug.Log("Current Ratio: " + GetCurrentRatio());
             AdjustSliderWithValue(GetCurrentRatio());
         }
         if (OVRInput.GetUp(OVRInput.Button.Two, RController))
@@ -44,6 +45,7 @@ public class IllusionCanvasController : MonoBehaviour
             // decrease the ratio of the pattern. Call DecreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<IllusionPatternLoader>().DecreasePatternRatio();
             DownButton.GetComponent<UnityEngine.UI.Button>().image.sprite = Resources.Load<Sprite>("Image/downarrow_blue");
+            Debug.Log("Current Ratio: " + GetCurrentRatio());
             AdjustSliderWithValue(GetCurrentRatio());
         }
         if (OVRInput.GetUp(OVRInput.Button.One, RController))
