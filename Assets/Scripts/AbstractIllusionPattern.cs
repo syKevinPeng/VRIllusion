@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class abstractIllusionPattern
+public abstract class AbstractIllusionPattern
 {
     public GameObject RawImage;
     public Texture2D texture;

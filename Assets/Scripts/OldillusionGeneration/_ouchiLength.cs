@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class _ouchiLength : abstractIllusionPattern
+public class _ouchiLength : AbstractIllusionPattern
 {
     // Start is called before the first frame update
     public int width = 512;

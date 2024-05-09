@@ -5,7 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class _wheelColor : abstractIllusionPattern
+public class _wheelColor : AbstractIllusionPattern
 {
     public int width = 1028;
     public int height = 1028;

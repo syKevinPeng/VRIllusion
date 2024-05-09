@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 
 
-public class _wheel1Length : abstractIllusionPattern
+public class _wheel1Length : AbstractIllusionPattern
 {
     public int width = 512;
     public int height = 512;

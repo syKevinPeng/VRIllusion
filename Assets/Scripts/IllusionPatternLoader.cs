@@ -7,8 +7,8 @@ using UnityEngine;
 public class IllusionPatternLoader : MonoBehaviour
 {
     // a list of all the patterns
-    public List<abstractIllusionPattern> allPatterns = new List<abstractIllusionPattern>();
-    public abstractIllusionPattern currentPattern;
+    public List<AbstractIllusionPattern> allPatterns = new List<AbstractIllusionPattern>();
+    public AbstractIllusionPattern currentPattern;
     private GameObject RawImage;
     private GameObject TimelineController;
 
@@ -17,19 +17,19 @@ public class IllusionPatternLoader : MonoBehaviour
         RawImage = GameObject.Find("IllusionCanvas").transform.Find("Canvas").transform.Find("RawImage").gameObject;
         TimelineController = GameObject.Find("TimelineController");
 
-        abstractIllusionPattern ouchiColor = new ouchiColor();
+        AbstractIllusionPattern ouchiColor = new OuchiColor();
+        AbstractIllusionPattern ouchiLength = new OuchiLength();
 
 
 
         // allPatterns.Add(ouchiLength);
-        // allPatterns.Add(ouchiColor);
         allPatterns.Add(ouchiColor);
+        allPatterns.Add(ouchiLength);
 
-        currentPattern = ouchiColor;
-        Debug.Log(" === Loading " + currentPattern + "  === ");
+        currentPattern = ouchiLength;
     }
 
-    public abstractIllusionPattern GetNextPattern()
+    public AbstractIllusionPattern GetNextPattern()
     {
         int index = allPatterns.IndexOf(currentPattern);
         if (index == allPatterns.Count - 1)
@@ -41,7 +41,6 @@ public class IllusionPatternLoader : MonoBehaviour
             index++;
         }
         currentPattern = allPatterns[index];
-        Debug.Log(" === Loading" + currentPattern + "  === ");
         return currentPattern;
     }
 

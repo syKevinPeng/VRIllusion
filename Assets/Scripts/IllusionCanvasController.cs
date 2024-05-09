@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Threading;
 using UnityEngine.UI;
 using Meta.XR.MRUtilityKit;
+using System;
 // This class is used to manage the controller of your VR equipment
 
 
@@ -23,7 +24,7 @@ public class IllusionCanvasController : MonoBehaviour
     // Start is called before the first frame update
     void GetIncreaseButtonPressed()
     {
-        if (OVRInput.Get(OVRInput.Button.Two, RController))
+        if (OVRInput.GetUp(OVRInput.Button.Two, RController))
         {
             // increase the ratio of the pattern. Call IncreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<IllusionPatternLoader>().IncreasePatternRatio();
@@ -38,7 +39,7 @@ public class IllusionCanvasController : MonoBehaviour
 
     void GetDecreaseButtonPressed()
     {
-        if (OVRInput.Get(OVRInput.Button.One, RController))
+        if (OVRInput.GetUp(OVRInput.Button.One, RController))
         {
             // decrease the ratio of the pattern. Call DecreasePatternRatio() in ouchi.cs
             RawImage.GetComponent<IllusionPatternLoader>().DecreasePatternRatio();
@@ -96,12 +97,29 @@ public class IllusionCanvasController : MonoBehaviour
         gameObject.transform.position = newPosition;
     }
 
+    public void UpdateSliderConfig(Boolean RightToLeft = false)
+    {
+        Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetMaxRatio();
+        Slider.GetComponent<UnityEngine.UI.Slider>().minValue = GetMinRatio();
+        Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
+        if (RightToLeft)
+        {
+            Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
+        }
+        else
+        {
+            Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.LeftToRight;
+        }
+
+    }
+
     public void OnClick()
     {
         float illusionThreshold = GetCurrentRatio();
         string patternName = RawImage.GetComponent<IllusionPatternLoader>().GetPatternName();
         dataSaver.setIllusionScore(patternName, illusionThreshold);
-        abstractIllusionPattern NextPattern = RawImage.GetComponent<IllusionPatternLoader>().GetNextPattern();
+        AbstractIllusionPattern NextPattern = RawImage.GetComponent<IllusionPatternLoader>().GetNextPattern();
+        UpdateSliderConfig();
         if (NextPattern == null)
         {
             Debug.Log("No More Patterns. Moving to the next scene.");
@@ -122,11 +140,7 @@ public class IllusionCanvasController : MonoBehaviour
         TimelineController = GameObject.Find("TimelineController");
         Debug.Log("Current Ratio: " + GetCurrentRatio() + " Init Ratio: " + GetInitRatio());
         // Config the slider
-        Slider.GetComponent<UnityEngine.UI.Slider>().maxValue = GetMaxRatio();
-        Slider.GetComponent<UnityEngine.UI.Slider>().minValue = GetMinRatio();
-        Slider.GetComponent<UnityEngine.UI.Slider>().value = GetCurrentRatio();
-        Slider.GetComponent<UnityEngine.UI.Slider>().direction = UnityEngine.UI.Slider.Direction.RightToLeft;
-
+        UpdateSliderConfig();
         dataSaver = TimelineController.GetComponent<TimelineController>().GetDataSaver();
 
         // intialize canvas position
