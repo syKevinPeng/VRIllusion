@@ -1,3 +1,4 @@
+from pathlib import Path
 from PIL import Image
 import numpy as np
 
@@ -70,10 +71,13 @@ numbers = np.arange(0.4, 4.1, 0.1)
 
 # Create an instance of OuchiLength
 illusion = OuchiLength()
-
+OUTPUT_DIR_PATH = "E:/Program Files/Unity/Unity Projects/VRIllusion/Assets/SavedTextures"
+OUTPUT_DIR_PATH = Path(OUTPUT_DIR_PATH)
+if not OUTPUT_DIR_PATH.exists():
+    Exception(f"Directory {OUTPUT_DIR_PATH} does not exist")
 
 for i in range(len(numbers)):
     # Increase the pattern ratio, show the updated texture, and save it
     illusion.increase_pattern_ratio()
     # illusion.texture.show()
-    illusion.save_image("./ouchi_illusion_length/{}.png".format(round(numbers[i], 2)))
+    illusion.save_image(OUTPUT_DIR_PATH/"ouchi_illusion_length/{}.png".format(round(numbers[i], 2)))
