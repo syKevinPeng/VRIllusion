@@ -17,17 +17,15 @@ public class IllusionPatternLoader : MonoBehaviour
         RawImage = GameObject.Find("IllusionCanvas").transform.Find("Canvas").transform.Find("RawImage").gameObject;
         TimelineController = GameObject.Find("TimelineController");
 
-        abstractIllusionPattern ouchiLength = new ouchiLength(stepSize: 0.1f);
-        abstractIllusionPattern ouchiColor = new ouchiColor(stepSize: 0.04f);
-        abstractIllusionPattern wheelLength = new wheelLength(stepSize: 1.0f);
-        abstractIllusionPattern wheel1Length = new wheel1Length(stepSize: 0.1f);
+        abstractIllusionPattern ouchiColor = new ouchiColor();
+
 
 
         // allPatterns.Add(ouchiLength);
         // allPatterns.Add(ouchiColor);
-        allPatterns.Add(wheelLength);
+        allPatterns.Add(ouchiColor);
 
-        currentPattern = wheelLength;
+        currentPattern = ouchiColor;
         Debug.Log(" === Loading " + currentPattern + "  === ");
     }
 
