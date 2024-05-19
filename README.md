@@ -30,4 +30,7 @@ We are currently recruiting participants for our study! If you are interested in
 ### Project Materials
 
 Project Proposal Slides: https://docs.google.com/presentation/d/17IPVhPUU_JZ8X-7xN9bXAG6UXE_B79E_Os9v0v52hq0/edit?usp=sharing
+
 Midterm Project Update: https://docs.google.com/presentation/d/12DTZtaid3fYiCp0jYgHgMZ0I8Vt-ycO0dCqYvQW3aVg/edit?usp=sharing
+
+Final Project Demo: https://docs.google.com/presentation/d/1yU1_a1G5BjjdbM8w26KZJ8XckjUbX_n6buOogdzGyAU/edit?usp=sharing
